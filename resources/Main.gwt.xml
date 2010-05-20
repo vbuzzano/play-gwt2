@@ -1,0 +1,4 @@
+<module rename-to="appname">
+	<inherits name="com.google.gwt.user.User"/>
+	<entry-point class="gwt.appname.client.cppname"/>
+</module>

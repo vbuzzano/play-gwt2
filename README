@@ -14,10 +14,13 @@ QUICK START
 To install this module:
 > play install gwt2
 
+Then edit the conf/application.conf file to enable the GWTmodule :
+> notepad conf/application.conf
+
 Then init your porject with:
 > play gwt:init <project>
 
-After init create you first module:
+After init create you first gwt module:
 > play gwt:create <project>
 
 And test it:
@@ -37,10 +40,10 @@ PLAY SHELL COMMANDS:
   	- app/gwt/<modulename>/server
   and add all example class needed to work
 
-  you can add multiple module each module will be created in a separate package.
+  you can add multiple gwt module. Each module will be created in a separate package.
   
 > play gwt:remove <project>
-  will ask for a module name, then remove the module from project
+  will ask for a gwt module name, then remove the gwt module from project
   
 # play gwt:devmode <project>
   will start gwt DevMode for all modules in app/gwt

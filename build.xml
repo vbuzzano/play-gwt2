@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="play-gwt2" default="build" basedir=".">
-
+    <property file="build.properties"/>
+	
     <path id="project.classpath">
         <pathelement path="${play.path}/framework/classes"/>
         <fileset dir="${play.path}/framework/lib">
@@ -25,7 +26,7 @@
                 <include name="**/play.static"/>
             </fileset>
         </copy>
-        <jar destfile="lib/play-play-gwt2.jar" basedir="tmp/classes">
+        <jar destfile="lib/play-gwt2.jar" basedir="tmp/classes">
             <manifest>
                 <section name="Play-module">
                     <attribute name="Specification-Title" value="play-gwt2"/>

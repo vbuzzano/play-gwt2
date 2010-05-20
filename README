@@ -1,6 +1,48 @@
 Welcome to the play-gwt2 wiki!
 
+Current version is 1.0
+Project Webstie: http://github.com/vbuzzano/play-gwt2
+
 I have started this project to use version 2.x of GWT with play! framework.
 For that, I started from the module play-gwt by Rustem Suniev
 
 Actually, this project is more a hack than a real new project.
+
+
+QUICK START
+-------------------------------------
+To install this module:
+> play install gwt2
+
+Then init your porject with:
+> play gwt:init <project>
+
+After init create you first module:
+> play gwt:create <project>
+
+And test it:
+> play gwt:devmode <project>
+
+
+
+PLAY SHELL COMMANDS:
+--------------------------------------
+> play gwt:init <project>
+  will initialize the project and create app/gwt and gwt-public directory
+
+> play gwt:create <project>
+  will ask for a module name, then create the module 
+  	- app/gwt/<modulename>/client
+  	- app/gwt/<modulename>/shared
+  	- app/gwt/<modulename>/server
+  and add all example class needed to work
+
+  you can add multiple module each module will be created in a separate package.
+  
+> play gwt:remove <project>
+  will ask for a module name, then remove the module from project
+  
+# play gwt:devmode <project>
+  will start gwt DevMode for all modules in app/gwt
+  
+  

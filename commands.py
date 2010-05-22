@@ -53,9 +53,9 @@ if play_command == 'gwt2:init':
 ###############################################################################
 # [eclipsify] make small modification to get access to source
 ###############################################################################
-if play_command == 'ec' or play_command == 'eclipsify':
-	dotProject = os.path.join(application_path, '.project')
-	replaceAll(dotProject, r'/gwt2/app</location>', "/gwt2/src</location>")
+#if play_command == 'ec' or play_command == 'eclipsify':
+#	dotProject = os.path.join(application_path, '.project')
+#	replaceAll(dotProject, r'/gwt2/app</location>', "/gwt2/src</location>")
 
 ###############################################################################
 # [gwt2:remove] Remove a GWT module

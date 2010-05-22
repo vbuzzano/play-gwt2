@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PLAY!"/>
-	<classpathentry kind="lib" path="lib/gwt-dev.jar"/>
-	<classpathentry kind="lib" path="lib/gwt-user.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/GWT"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -37,7 +37,7 @@ public class GWTPlugin extends PlayPlugin {
         if (request.method == "POST") {
             for (Class service : Play.classloader.getAnnotatedClasses(GWTServicePath.class)) {
                 String path = ((GWTServicePath) service.getAnnotation(GWTServicePath.class)).value();
-                if (request.path.equals(path)) {
+                if (request.path.equals("/app"+path)) {
                     invokeService(service);
                     break;
                 }

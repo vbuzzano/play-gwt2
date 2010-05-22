@@ -45,7 +45,7 @@ PLAY SHELL COMMANDS:
 > play gwt:remove <project>
   will ask for a gwt module name, then remove the gwt module from project
   
-# play gwt:devmode <project>
+> play gwt:devmode <project>
   will start gwt DevMode for all modules in app/gwt
   
   

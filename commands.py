@@ -104,37 +104,37 @@ if play_command == 'gwt2:create':
 
 
 	# copy index.html
-	shutil.copyfile(os.path.join(play_base, 'modules/gwt2/resources/index.html'), os.path.join(application_path, 'app/gwt/'+appname+'/public/index.html'))
+	shutil.copyfile(os.path.join(play_base, 'modules/gwt2-1.1/resources/index.html'), os.path.join(application_path, 'app/gwt/'+appname+'/public/index.html'))
 	indexFile = os.path.join(application_path, 'app/gwt/'+appname+'/public/index.html')
 	replaceAll(indexFile, r'appname', appname)
 	
 	# copy entry point	
-	shutil.copyfile(os.path.join(play_base, 'modules/gwt2/resources/Main.java'), os.path.join(application_path, 'app/gwt/'+appname+'/client/'+appname.capitalize()+'.java'))
+	shutil.copyfile(os.path.join(play_base, 'modules/gwt2-1.1/resources/Main.java'), os.path.join(application_path, 'app/gwt/'+appname+'/client/'+appname.capitalize()+'.java'))
 	mainFile = os.path.join(application_path, 'app/gwt/'+appname+'/client/'+appname.capitalize()+'.java')
 	replaceAll(mainFile, r'appname', appname)
 	replaceAll(mainFile, r'cppname', appname.capitalize())	
 
 	# copy app def
-	shutil.copyfile(os.path.join(play_base, 'modules/gwt2/resources/Main.gwt.xml'), os.path.join(application_path, 'app/gwt/'+appname+'/'+appname.capitalize()+'.gwt.xml'))
+	shutil.copyfile(os.path.join(play_base, 'modules/gwt2-1.1/resources/Main.gwt.xml'), os.path.join(application_path, 'app/gwt/'+appname+'/'+appname.capitalize()+'.gwt.xml'))
 	mainFile = os.path.join(application_path, 'app/gwt/'+appname+'/'+appname.capitalize()+'.gwt.xml')
 	replaceAll(mainFile, r'appname', appname)
 	replaceAll(mainFile, r'cppname', appname.capitalize())	
 	
 
 	# copy service class	
-	shutil.copyfile(os.path.join(play_base, 'modules/gwt2/resources/GreetingService.java'), os.path.join(application_path, 'app/gwt/'+appname+'/client/GreetingService.java'))
+	shutil.copyfile(os.path.join(play_base, 'modules/gwt2-1.1/resources/GreetingService.java'), os.path.join(application_path, 'app/gwt/'+appname+'/client/GreetingService.java'))
 	tmpFile = os.path.join(application_path, 'app/gwt/'+appname+'/client/GreetingService.java')
 	replaceAll(tmpFile, r'appname', appname)
 
-	shutil.copyfile(os.path.join(play_base, 'modules/gwt2/resources/GreetingServiceAsync.java'), os.path.join(application_path, 'app/gwt/'+appname+'/client/GreetingServiceAsync.java'))
+	shutil.copyfile(os.path.join(play_base, 'modules/gwt2-1.1/resources/GreetingServiceAsync.java'), os.path.join(application_path, 'app/gwt/'+appname+'/client/GreetingServiceAsync.java'))
 	tmpFile = os.path.join(application_path, 'app/gwt/'+appname+'/client/GreetingServiceAsync.java')
 	replaceAll(tmpFile, r'appname', appname)
 	
-	shutil.copyfile(os.path.join(play_base, 'modules/gwt2/resources/GreetingServiceImpl.java'), os.path.join(application_path, 'app/gwt/'+appname+'/server/GreetingServiceImpl.java'))
+	shutil.copyfile(os.path.join(play_base, 'modules/gwt2-1.1/resources/GreetingServiceImpl.java'), os.path.join(application_path, 'app/gwt/'+appname+'/server/GreetingServiceImpl.java'))
 	tmpFile = os.path.join(application_path, 'app/gwt/'+appname+'/server/GreetingServiceImpl.java')
 	replaceAll(tmpFile, r'appname', appname)	
 
-	shutil.copyfile(os.path.join(play_base, 'modules/gwt2/resources/FieldVerifier.java'), os.path.join(application_path, 'app/gwt/'+appname+'/shared/FieldVerifier.java'))
+	shutil.copyfile(os.path.join(play_base, 'modules/gwt2-1.1/resources/FieldVerifier.java'), os.path.join(application_path, 'app/gwt/'+appname+'/shared/FieldVerifier.java'))
 	tmpFile = os.path.join(application_path, 'app/gwt/'+appname+'/shared/FieldVerifier.java')
 	replaceAll(tmpFile, r'appname', appname)	
 	

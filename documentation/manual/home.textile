@@ -25,9 +25,9 @@ bc. # Additional modules
 module.gwt2=${play.path}/modules/gwt2
 
  
-h2. <a>Initialize you Application</a>
-
-bc. play gwt:init myApp
+h2. <a>Initialize you Application</a> 
+ 
+bc. play gwt2:init myApp
 
 p. this will create some folder
  - <application_path>/app/gwt (directory for gwt modules)
@@ -36,8 +36,10 @@ p. this will create some folder
 p. copy gwt-user.jar to <application_path>/lib
 
 
-h2. <a>Create a GWT Module</a>
-  
+h2. <a>Create a GWT Module</a> 
+ 
+create your module like this:
+
 bc. play gwt2:create myApp
 
 p. this will ask you a gwt module name 
@@ -64,17 +66,6 @@ p. GreetingService Interface must use annotation @RemoteServiceRelativePath("gre
 
 p. GreetingServiceImpl.java must implements GWTService and us @GWTServicePath("/firstmodule/greet") annotation
 
-
-h2. <a>Setting up a GWT project</a>
-
-Start to create a new application in the classical way. 
-
-bc. # play new test-gwt
-
-Then edit the conf/application.conf file to enable the GWTmodule :
-
-
-Now use the **gwt:init** command to bootstrap your GWT project in the existing Play application:
 
 h2. <a>Testing you GWT Module with dev mode</a>
 

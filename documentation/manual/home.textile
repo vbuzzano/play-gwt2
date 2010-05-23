@@ -90,6 +90,18 @@ p.  GWT will compile your modules at first time.
 
 p. Now you access your gwt module this url <host>/app/firstmodule/index.html 
 
+h2. <a>Compiling a module</a>
+
+To compile a module (eg: before deployment)
+
+bc. play gwt2:compile myApp
+
+p. this will ask you a gwt module name 
+
+bc. What is the gwt module name ? 
+
+p.  Enter a name, then GWT will compile your module.
+
 
 h2. <a>Remove a GWT Module</a>
 

@@ -30,10 +30,10 @@ And test it:
 
 PLAY SHELL COMMANDS:
 --------------------------------------
-> play gwt:init <project>
+> play gwt2:init <project>
   will initialize the project and create app/gwt and gwt-public directory
 
-> play gwt:create <project>
+> play gwt2:create <project>
   will ask for a module name, then create the module 
   	- app/gwt/<modulename>/client
   	- app/gwt/<modulename>/shared
@@ -42,10 +42,13 @@ PLAY SHELL COMMANDS:
 
   you can add multiple gwt module. Each module will be created in a separate package.
   
-> play gwt:remove <project>
+> play gwt2:remove <project>
   will ask for a gwt module name, then remove the gwt module from project
   
-> play gwt:devmode <project>
+> play gwt2:devmode <project>
   will start gwt DevMode for all modules in app/gwt
+  
+> play gwt2:compile<project>
+  will compile a module
   
   

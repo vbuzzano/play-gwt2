@@ -185,3 +185,36 @@ if play_command == 'gwt2:devmode':
     print "~"
     sys.exit(0)
     
+	
+###############################################################################
+# [gwt2:compile] Run the gwt DevMode
+###############################################################################
+if play_command == 'gwt2:compile':
+    print "~ Compiling module ..."
+    print "~"
+    
+    # ask for appname
+    appname = raw_input('What is the gwt module name ? ')
+    appname = appname.strip()
+    
+    # Run
+    do_classpath()
+    do_java()
+    cp = []
+    cp.append(os.path.normpath(os.path.join(application_path, 'app')))
+    cp.append(os.path.normpath(os.path.join(application_path, 'lib/gwt-user.jar')))
+    cp.append(os.path.normpath(os.path.join(gwt_path, 'gwt-dev.jar')))
+	    
+    for jar in os.listdir(os.path.join(application_path, 'lib')):
+        if jar.endswith('.jar'):
+            cp.append(os.path.normpath(os.path.join(application_path, 'lib/%s' % jar)))
+    cps = ':'.join(cp)
+    if os.name == 'nt':
+        cps = ';'.join(cp)
+    gwt_cmd = [java_path, '-Xmx256M', '-classpath', cps, 'com.google.gwt.dev.Compiler', '-style', 'OBF', '-war', os.path.normpath(os.path.join(application_path, 'gwt-public')), 'gwt.'+appname+"."+appname.capitalize()]
+    print gwt_cmd
+    subprocess.call(gwt_cmd, env=os.environ)
+    print "~"
+    sys.exit(0)
+    
+    

@@ -1,4 +1,4 @@
-package gwt.appname.shared;
+package gwt.gwtmodule.shared;
 
 /**
  * <p>

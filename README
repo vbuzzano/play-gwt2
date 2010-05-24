@@ -1,13 +1,11 @@
-Welcome to the play-gwt2 wiki!
+GWT2 Plugin for Play!
+by Vincent Buzzano
 
-Current version is 1.0
+Current version is 1.2
 Project Webstie: http://github.com/vbuzzano/play-gwt2
 
 I have started this project to use version 2.x of GWT with play! framework.
 For that, I started from the module play-gwt by Rustem Suniev
-
-Actually, this project is more a hack than a real new project.
-
 
 QUICK START
 -------------------------------------
@@ -30,25 +28,21 @@ And test it:
 
 PLAY SHELL COMMANDS:
 --------------------------------------
-> play gwt2:init <project>
-  will initialize the project and create app/gwt and gwt-public directory
+For alist of commands, execute 
 
-> play gwt2:create <project>
-  will ask for a module name, then create the module 
-  	- app/gwt/<modulename>/client
-  	- app/gwt/<modulename>/shared
-  	- app/gwt/<modulename>/server
-  and add all example class needed to work
+> play gwt2:help <myApp>
 
-  you can add multiple gwt module. Each module will be created in a separate package.
-  
-> play gwt2:remove <project>
-  will ask for a gwt module name, then remove the gwt module from project
-  
-> play gwt2:devmode <project>
-  will start gwt DevMode for all modules in app/gwt
-  
-> play gwt2:compile<project>
-  will compile a module
+This will display GWT2 Plugin for Play! commands help.
+
+HISTORY
+--------------------------------------
+1.0 first buggy released based on play-gwt by Rustem Suniev
+1.1 first offical released. Bug fixed.
+1.2 Improve documentation and commands shell. 
+	- Rewrite command.py
+    - Add compilation command
+    - Add clean command
+    - Improve devmode launch
+   
   
   

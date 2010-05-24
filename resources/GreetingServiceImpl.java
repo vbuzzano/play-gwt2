@@ -1,7 +1,7 @@
-package gwt.appname.server;
+package gwt.gwtmodule.server;
 
-import gwt.appname.client.GreetingService;
-import gwt.appname.shared.FieldVerifier;
+import gwt.gwtmodule.client.GreetingService;
+import gwt.gwtmodule.shared.FieldVerifier;
 
 import play.modules.gwt2.GWTService;
 import play.modules.gwt2.GWTServicePath;
@@ -9,7 +9,7 @@ import play.modules.gwt2.GWTServicePath;
 
 import com.google.gwt.user.server.rpc.*;
  
-@GWTServicePath("/appname/greet")
+@GWTServicePath("/gwtmodule/greet")
 public class GreetingServiceImpl extends GWTService implements GreetingService {
  
     public String greetServer(String name) {

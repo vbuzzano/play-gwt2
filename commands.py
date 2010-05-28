@@ -1,6 +1,8 @@
 # GWT2 Plugin for Play!
 # by Vincent Buzzano <vincent.buzzano@gmail.com>
 
+import sys,os,inspect
+
 ###############################################################################
 # Check for GWT_PATH environment variable
 ###############################################################################
@@ -8,7 +10,7 @@ if play_command.startswith('gwt2:'):
 	global gwt2_public_path
 	global gwt2_modules_path
 	global this_path
-	this_path = "modules/gwt2-1.1"
+	this_path = inspect.getfile(inspect.currentframe()).replace("commands.py","")
 	gwt2_public_path = "gwt-public"
 	gwt2_modules_path = os.path.join("app","gwt")
 	gwt_path = None

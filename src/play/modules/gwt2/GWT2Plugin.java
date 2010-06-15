@@ -10,7 +10,15 @@ import play.mvc.Router.Route;
 import play.mvc.results.RedirectToStatic;
 import play.mvc.results.RenderText;
 
-public class GWTPlugin extends PlayPlugin {
+/**
+ * GWT2Plugin Class 
+ *
+ * Main GWT2 Plugin Class
+ * 
+ * @author Vincent Buzzano <vincent.buzzano@gmail.com>
+ * based on the GWT Plugin by **Rustem Suniev**.
+ */
+public class GWT2Plugin extends PlayPlugin {
 
     @Override
     public void onRoutesLoaded() {
@@ -35,8 +43,8 @@ public class GWTPlugin extends PlayPlugin {
         }
         // Hand made routing;
         if (request.method == "POST") {
-            for (Class service : Play.classloader.getAnnotatedClasses(GWTServicePath.class)) {
-                String path = ((GWTServicePath) service.getAnnotation(GWTServicePath.class)).value();
+            for (Class service : Play.classloader.getAnnotatedClasses(GWT2ServicePath.class)) {
+                String path = ((GWT2ServicePath) service.getAnnotation(GWT2ServicePath.class)).value();
                 if (request.path.equals("/app"+path)) {
                     invokeService(service);
                     break;
@@ -45,11 +53,15 @@ public class GWTPlugin extends PlayPlugin {
         }
     }
 
+    /**
+     * Invoke a service
+     * @param service
+     */
     public void invokeService(Class service) {
         String result = "";
-        if (GWTService.class.isAssignableFrom(service)) {
+        if (GWT2Service.class.isAssignableFrom(service)) {
             try {
-                result = ((GWTService) service.newInstance()).invoke();
+                result = ((GWT2Service) service.newInstance()).invoke();
             } catch (Exception ex) {
                 // Rethrow the enclosed exception
                 if (ex instanceof PlayException) {

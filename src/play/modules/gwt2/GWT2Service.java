@@ -20,12 +20,57 @@ import com.google.gwt.user.server.rpc.SerializationPolicy;
 import com.google.gwt.user.server.rpc.SerializationPolicyLoader;
 import com.google.gwt.user.server.rpc.SerializationPolicyProvider;
 
-public class GWTService implements SerializationPolicyProvider {
+/**
+ * GWT2Service Class
+ *
+ * Extends this class to create a GWT2 Service for Play! framework
+ * This class is based on the GWT Plugin by **Rustem Suniev**.
+ * 
+ * For example, to implement this service:
+ * 
+ * <pre><code>
+ * package gwt.mymod.client;
+ * 
+ * import com.google.gwt.user.client.rpc.RemoteService;
+ * import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+ * 
+ * @RemoteServiceRelativePath("hello")
+ * public interface HelloService extends RemoteService {
+ *     String sayHello(String name);
+ * }
+ * 
+ * Create a class that extends the **play.modules.gwt.GWTService**, and define the service URL path with the **play.modules.gwt.GWTServicePath** annotation. Like this:
+ *
+ * package services;
+ * 
+ * import play.modules.gwt2.GWTService;
+ * import play.modules.gwt2.GWTServicePath;
+ * import gwt.mymod.client.HelloService;
+ * 
+ * @GWTServicePath("/main/hello")
+ * public class HelloServiceImpl extends GWTService implements HelloService {
+ *     public String sayHello(String name) {
+ *         return "Hello " + name;
+ *     }
+ * }
+ * 
+ * This is the only difference from the GWT documentation.
+ * 
+ * @author Vincent Buzzano <vincent.buzzano@gmail.com>
+ */
+public class GWT2Service implements SerializationPolicyProvider {
 
     public final SerializationPolicy getSerializationPolicy(String moduleBaseURL, String strongName) {
         return doGetSerializationPolicy(moduleBaseURL, strongName);
     }
 
+    /**
+     * 
+     * 
+     * @param moduleBaseURL
+     * @param strongName
+     * @return
+     */
     protected SerializationPolicy doGetSerializationPolicy(String moduleBaseURL, String strongName) {
 
         // Find the module path
@@ -77,6 +122,10 @@ public class GWTService implements SerializationPolicyProvider {
         return serializationPolicy;
     }
 
+    /**
+     * Invoke the service
+     * @return
+     */
     public String invoke() {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         try {

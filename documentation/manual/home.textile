@@ -124,32 +124,28 @@ Exposing a GWT service with Play is almost the same, but since you can't define 
 
 For example, to implement this service:
 
-bc. package client;
- 
-import com.google.gwt.user.client.rpc.*;
- 
+bc. 
+package gwt.mymod.client;
+import com.google.gwt.user.client.rpc.RemoteService;
+import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("hello")
 public interface HelloService extends RemoteService {
- 
     String sayHello(String name);
-    
 }
+
 
 simply create a class that extends the **play.modules.gwt.GWTService**, and define the service URL path with the **play.modules.gwt.GWTServicePath** annotation. Like this:
 
-bc. package services;
- 
-import com.google.gwt.user.server.rpc.*;
-import play.modules.gwt.*;
-import client.*;
- 
+bc.  
+package services;
+import play.modules.gwt2.GWTService;
+import play.modules.gwt2.GWTServicePath;
+import gwt.mymod.client.HelloService;
 @GWTServicePath("/main/hello")
 public class HelloServiceImpl extends GWTService implements HelloService {
- 
     public String sayHello(String name) {
         return "Hello " + name;
     }
- 
 }
 
 This is the only difference from the GWT documentation.

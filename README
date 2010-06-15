@@ -16,13 +16,13 @@ Then edit the conf/application.conf file to enable the GWTmodule :
 > notepad conf/application.conf
 
 Then init your porject with:
-> play gwt:init <project>
+> play gwt2:init <project>
 
 After init create you first gwt module:
-> play gwt:create <project>
+> play gwt2:create <project>
 
 And test it:
-> play gwt:devmode <project>
+> play gwt2:devmode <project>
 
 
 
@@ -43,6 +43,7 @@ HISTORY
     - Add compilation command
     - Add clean command
     - Improve devmode launch
+    - Change Plugin Class name for compatibility with 1st GwT Plugin
    
   
   

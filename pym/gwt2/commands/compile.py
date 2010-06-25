@@ -1,0 +1,19 @@
+###############################################################################
+# GWT2 Compile Command - tested[2010-06-25]
+#
+# [gwt2:compile]
+# 
+# Compile an existing GWT Module
+#
+# @author Vincent Buzzano <vincent.buzzano@gmail.com>
+###############################################################################
+import string
+from gwt2 import *
+
+def execute(args):
+	
+	# List all modules
+	gwtmodule = functions.askForModule(args, 'compile', True)
+		
+	# Compile selected module
+	functions.compile(args, gwtmodule)

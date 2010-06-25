@@ -10,6 +10,9 @@
 import sys, os, string
 from gwt2 import *
 
+def getCommands():
+	return ["gwt2:clean"]
+
 def execute(args):
 	gwt2_modules_path = args.get("gwt2_modules_path")
 	gwt2_public_path = args.get("gwt2_public_path")

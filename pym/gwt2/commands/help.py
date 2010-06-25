@@ -8,6 +8,9 @@
 # @author Vincent Buzzano <vincent.buzzano@gmail.com>
 ###############################################################################
 
+def getCommands():
+	return ["gwt2:help"]
+
 def execute(args):
 	print "~"
 	print "~ GWT2 Plugin for Play! Help"

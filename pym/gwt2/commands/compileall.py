@@ -10,6 +10,9 @@
 import os
 from gwt2 import *
 
+def getCommands():
+	return ["gwt2:compileall"]
+
 def execute(args):
 	application_path = args.get("app").path
 	gwt2_modules_path = args.get("gwt2_modules_path")

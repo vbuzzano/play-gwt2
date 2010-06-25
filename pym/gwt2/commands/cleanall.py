@@ -9,6 +9,9 @@
 ###############################################################################
 import os, shutil
 
+def getCommands():
+	return ["gwt2:cleanall"]
+
 def execute(args):
 	
 	application_path = args.get("app").path

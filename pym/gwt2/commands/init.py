@@ -10,6 +10,9 @@
 ###############################################################################
 import os, shutil
 
+def getCommands():
+	return ["gwt2:init"]
+
 def execute(args):
 	app = args.get("app")
 	gwt2_public_path = args.get("gwt2_public_path")
@@ -27,4 +30,4 @@ def execute(args):
 	# Copy libs
 	shutil.copyfile(os.path.join(gwt_path, 'gwt-user.jar'), os.path.join(app.path, 'lib/gwt-user.jar'))
 	print "~ Application ready..."
-	print "~"	
+	print "~"

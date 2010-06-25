@@ -9,5 +9,8 @@
 ###############################################################################
 from gwt2 import *
 
+def getCommands():
+	return ["gwt2:modules", "gwt2:list"]
+
 def execute(args):
 	functions.listModules(args)

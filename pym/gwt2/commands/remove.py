@@ -11,6 +11,9 @@ import sys, os, string, shutil
 
 from gwt2 import *
 
+def getCommands():
+	return ["gwt2:remove"]
+
 def execute(args):
 	application_path = args.get("app").path
 	gwt2_modules_path = args.get("gwt2_modules_path")

@@ -3,46 +3,61 @@
 # by Vincent Buzzano <vincent.buzzano@gmail.com>
 ###############################################################################
 import getopt, sys, os, inspect
+global module_path, command_path
+module_path = inspect.getfile(inspect.currentframe()).replace("commands.py","")
+command_path = os.path.join(module_path, "pym", "gwt2", "commands")
 
-script_path = inspect.getfile(inspect.currentframe()).replace("commands.py","")
-sys.path.append(os.path.join(script_path, "pym"))
-
+sys.path.append(os.path.join(module_path, "pym"))
 from gwt2 import *
 from gwt2.commands import *
 from play.utils import *
 
-play_app = None
-play_env = None
-play_command = None
-play_remaining_args = None
+###############################################################################
+# Get Dynamic commands List 
+###############################################################################
+def getCommandsList():
+	global command_path
+	clist = []
+	clist.append('gwt2:')
+	for file in os.listdir(command_path):
+		if file[-3:] == '.py' and file[0:2] != '__':
+			m = file[0:-3]+".getCommands()"
+			cmd = eval(m)
+			for item in cmd :
+				clist.append(item)
+	return clist
 
+###############################################################################
+# Call a module command 
+###############################################################################
+def callModuleCommand(args):
+	global command_path
+	module = None
+	command = args.get("command")
+	for file in os.listdir(command_path):
+		if file[-3:] == '.py' and file[0:2] != '__':
+			m = file[0:-3]+".getCommands()"
+			cmd = eval(m)
+			for item in cmd :
+				if item == command :
+					module = file[0:-3]
+	
+	if command != "" and module != None:
+		eval(module+'.execute(args)')
 
-COMMANDS = ["gwt2:", 
-			"gwt2:help", 
-			"gwt2:init", 
-			"gwt2:modules", 
-			"gwt2:list",			
-			"gwt2:remove", 
-			"gwt2:clean", 
-			"gwt2:cleanall", 
-			"gwt2:compile", 
-			"gwt2:compileall", 
-			"gwt2:create", 
-			"gwt2:devmode" 
-		   ]
 
 ###############################################################################
 # Module Execute 
 ###############################################################################
 def execute(**kargs):
+	global args
+	args = kargs
+	
 	# get application
 	app = kargs.get("app")
 	
 	# get env
 	env = kargs.get("env")
-	
-	# get command
-	command = kargs.get("command")
 	
 	# get args
 	play_remaining_args = kargs.get("args")
@@ -54,7 +69,7 @@ def execute(**kargs):
 	kargs['gwt2_modules_path'] = os.path.join("app","gwt")
 	
 	# Module path (this_path) 
-	kargs['module_path'] = inspect.getfile(inspect.currentframe()).replace("commands.py","")
+	kargs['module_path'] = module_path
 
 	# Check options
 	gwt_path = None
@@ -88,28 +103,10 @@ def execute(**kargs):
 	
 	kargs['gwt_path'] = gwt_path
 	
-	# execute to comand
-	if command == 'gwt2:help':
-		help.execute(kargs)
-	elif command == 'gwt2:init':
-		init.execute(kargs)
-	elif command == 'gwt2:modules':
-		modules.execute(kargs)
-	elif command == 'gwt2:list':
-		modules.execute(kargs)
-	elif command == 'gwt2:remove':
-		remove.execute(kargs)
-	elif command == 'gwt2:clean':
-		clean.execute(kargs)
-	elif command == 'gwt2:cleanall':
-		cleanall.execute(kargs)
-	elif command == 'gwt2:compile':
-		compile.execute(kargs)
-	elif command == 'gwt2:compileall':
-		compileall.execute(kargs)
-	elif command == 'gwt2:create':
-		create.execute(kargs)
-	elif command == 'gwt2:devmode':
-		devmode.execute(kargs)
+	# execute command
+	callModuleCommand(kargs)
 
-	
+###############################################################################
+# Init Modules Commands 
+###############################################################################
+COMMANDS = getCommandsList()

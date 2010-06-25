@@ -10,6 +10,9 @@
 import string
 from gwt2 import *
 
+def getCommands():
+	return ["gwt2:compile"]
+
 def execute(args):
 	
 	# List all modules

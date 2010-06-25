@@ -11,6 +11,9 @@ import sys, os, string, shutil
 
 from play.utils import *
 
+def getCommands():
+	return ["gwt2:create"]
+
 def execute(args):
 	
 	# init variable

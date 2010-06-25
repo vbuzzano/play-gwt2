@@ -5,7 +5,7 @@
 # 
 # Display the GWT2 Plugin Help
 #
-# @author Vincent Buzzano <vincent.buzzano@gmail.com>
+# @author Vincent Buzzano <vincent.buzzano@gmail.com> 
 ###############################################################################
 
 def getCommands():

@@ -1,7 +1,7 @@
 GWT2 Plugin for Play!
 by Vincent Buzzano
 
-Current version is 1.2
+Current version is 1.3 for play 1.1
 Project Webstie: http://github.com/vbuzzano/play-gwt2
 
 I have started this project to use version 2.x of GWT with play! framework.
@@ -44,6 +44,7 @@ HISTORY
     - Add clean command
     - Improve devmode launch
     - Change Plugin Class name for compatibility with 1st GwT Plugin
-   
+1.3 Upgrade plugin for play! 1.1
+	- Improved command line system
   
   

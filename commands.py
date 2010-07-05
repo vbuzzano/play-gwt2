@@ -13,21 +13,6 @@ from gwt2.commands import *
 from play.utils import *
 
 ###############################################################################
-# Get Dynamic commands List 
-###############################################################################
-def getCommandsList():
-	global command_path
-	clist = []
-	clist.append('gwt2:')
-	for file in os.listdir(command_path):
-		if file[-3:] == '.py' and file[0:2] != '__':
-			m = file[0:-3]+".getCommands()"
-			cmd = eval(m)
-			for item in cmd :
-				clist.append(item)
-	return clist
-
-###############################################################################
 # Call a module command 
 ###############################################################################
 def callModuleCommand(args):
@@ -109,4 +94,15 @@ def execute(**kargs):
 ###############################################################################
 # Init Modules Commands 
 ###############################################################################
-COMMANDS = getCommandsList()
+###############################################################################
+# Get Dynamic commands List 
+###############################################################################
+clist = []
+clist.append('gwt2:')
+for file in os.listdir(command_path):
+	if file[-3:] == '.py' and file[0:2] != '__':
+		m = file[0:-3]+".getCommands()"
+		cmd = eval(m)
+		for item in cmd :
+			clist.append(item)
+COMMANDS = clist

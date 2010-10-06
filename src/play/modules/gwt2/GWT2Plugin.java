@@ -43,10 +43,10 @@ public class GWT2Plugin extends PlayPlugin {
         }
         // Hand made routing;
         if (request.method == "POST") {
-            for (Class service : Play.classloader.getAnnotatedClasses(GWT2ServicePath.class)) {
+            for (Class<?> service : Play.classloader.getAnnotatedClasses(GWT2ServicePath.class)) {
                 String path = ((GWT2ServicePath) service.getAnnotation(GWT2ServicePath.class)).value();
                 if (request.path.equals("/app"+path)) {
-                    invokeService(service);
+                    invokeService(service, request);
                     break;
                 }
             }
@@ -57,11 +57,14 @@ public class GWT2Plugin extends PlayPlugin {
      * Invoke a service
      * @param service
      */
-    public void invokeService(Class service) {
+    public void invokeService(Class service, Request request) {
         String result = "";
         if (GWT2Service.class.isAssignableFrom(service)) {
             try {
-                result = ((GWT2Service) service.newInstance()).invoke();
+            	GWT2Service gwts = (GWT2Service) service.newInstance();
+            	gwts.request = request;
+                result = gwts.invoke();
+                
             } catch (Exception ex) {
                 // Rethrow the enclosed exception
                 if (ex instanceof PlayException) {

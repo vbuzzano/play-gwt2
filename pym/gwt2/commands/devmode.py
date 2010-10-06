@@ -12,6 +12,9 @@ import os, string, sys, subprocess
 def getCommands():
 	return ["gwt2:devmode"]
 
+def getHelp():
+	return "Start GWT2 DevMode"
+
 def execute(args):
 	app = args.get("app")
 	application_path = args.get("app").path

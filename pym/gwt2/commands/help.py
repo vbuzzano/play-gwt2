@@ -9,7 +9,10 @@
 ###############################################################################
 
 def getCommands():
-	return ["gwt2:help"]
+	return ["gwt2:help", "gwt2:"]
+
+def getHelp():
+	return "Show this help"
 
 def execute(args):
 	print "~"

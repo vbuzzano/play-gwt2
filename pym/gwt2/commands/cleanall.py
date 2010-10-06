@@ -12,6 +12,9 @@ import os, shutil
 def getCommands():
 	return ["gwt2:cleanall"]
 
+def getHelp():
+	return "Clean all compiled GWT Modules"
+
 def execute(args):
 	
 	application_path = args.get("app").path

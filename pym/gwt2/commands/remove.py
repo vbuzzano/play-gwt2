@@ -14,6 +14,9 @@ from gwt2 import *
 def getCommands():
 	return ["gwt2:remove"]
 
+def getHelp():
+	return "Remove a GWT Module"
+
 def execute(args):
 	application_path = args.get("app").path
 	gwt2_modules_path = args.get("gwt2_modules_path")

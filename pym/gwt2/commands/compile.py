@@ -13,6 +13,9 @@ from gwt2 import *
 def getCommands():
 	return ["gwt2:compile"]
 
+def getHelp():
+	return "Compile a GWT Module"
+
 def execute(args):
 	
 	# List all modules

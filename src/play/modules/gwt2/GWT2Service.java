@@ -60,6 +60,12 @@ import com.google.gwt.user.server.rpc.SerializationPolicyProvider;
  */
 public class GWT2Service implements SerializationPolicyProvider {
 
+	protected Request request;
+	
+	public void setRequest(Request request) {
+		this.request = request;
+	}
+	
     public final SerializationPolicy getSerializationPolicy(String moduleBaseURL, String strongName) {
         return doGetSerializationPolicy(moduleBaseURL, strongName);
     }

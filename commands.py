@@ -19,6 +19,10 @@ def callModuleCommand(args):
 	global command_path
 	module = None
 	command = args.get("command")
+	
+	if command == "gwt2:":
+		command = "gwt2:help"
+		
 	for file in os.listdir(command_path):
 		if file[-3:] == '.py' and file[0:2] != '__':
 			m = file[0:-3]+".getCommands()"
@@ -72,10 +76,13 @@ def execute(**kargs):
 	if not gwt_path and os.environ.has_key('GWT_PATH'):
 		gwt_path = os.path.normpath(os.path.abspath(os.environ['GWT_PATH']))
 	
+	if not gwt_path and os.environ.has_key('GWT_HOME'):
+		gwt_path = os.path.normpath(os.path.abspath(os.environ['GWT_HOME']))
+	
 	# if nothing has been found. stop
 	if not gwt_path:
 		print "~ Error: You need to specify the path of you GWT installation, "
-		print "~ either using the $GWT_PATH environment variable or with the --gwt option" 
+		print "~ either using the $GWT_PATH or $GWT_HOME environment variable or with the --gwt option" 
 		print "~ "
 		sys.exit(-1)
 	
@@ -95,14 +102,25 @@ def execute(**kargs):
 # Init Modules Commands 
 ###############################################################################
 ###############################################################################
-# Get Dynamic commands List 
+# Get Dynamic commands and Help List 
 ###############################################################################
+# commands list
 clist = []
-clist.append('gwt2:')
+hlist = {}
+#clist.append('gwt2:')
 for file in os.listdir(command_path):
 	if file[-3:] == '.py' and file[0:2] != '__':
 		m = file[0:-3]+".getCommands()"
 		cmd = eval(m)
 		for item in cmd :
+			# append command
 			clist.append(item)
+			# create command help 
+			h = file[0:-3]+".getHelp()"
+			try:
+				h = eval(h)
+			except:
+				h = "No help found"
+			hlist[item] = h
 COMMANDS = clist
+HELP = hlist

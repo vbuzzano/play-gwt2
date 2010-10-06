@@ -14,6 +14,9 @@ from play.utils import *
 def getCommands():
 	return ["gwt2:create"]
 
+def getHelp():
+	return "Create a new GWT Module"
+
 def execute(args):
 	
 	# init variable

@@ -13,6 +13,9 @@ import os, shutil
 def getCommands():
 	return ["gwt2:init"]
 
+def getHelp():
+	return "Initialize the application"
+
 def execute(args):
 	app = args.get("app")
 	gwt2_public_path = args.get("gwt2_public_path")
@@ -26,6 +29,10 @@ def execute(args):
 	# Create gwt2_modules_path
 	if not os.path.exists(os.path.join(app.path, gwt2_modules_path)):
 		os.mkdir(os.path.join(app.path, gwt2_modules_path))
+
+	# Create folder lib if not exists
+	if not os.path.exists(os.path.join(app.path, "lib")):
+		os.mkdir(os.path.join(app.path, "lib"))
 		
 	# Copy libs
 	shutil.copyfile(os.path.join(gwt_path, 'gwt-user.jar'), os.path.join(app.path, 'lib/gwt-user.jar'))

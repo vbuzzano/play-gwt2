@@ -59,7 +59,7 @@ def initMainModule(app, env, gwt2_module_path):
 	file = os.path.join(app.path, 'app', modulename.capitalize()+'.gwt.xml')
 	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_path, 'resources', 'Main.gwt.xml'), file)
 	replaceAll(file, r'\[modulename\]', modulename)
-	replaceAll(file, r'\[othermodule\]', "")
+	replaceAll(file, r'\[othermodule\]', "<inherits name='play.modules.gwt2.PlayGWT2'/>")
 	replaceAll(file, r'\[entrypointclass\]', "")
 	replaceAll(file, r'\[sourcepath\]', "<source path='models'/>")
 

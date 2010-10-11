@@ -76,7 +76,9 @@ def createModule(app, env, gwt2_module_path, modules_path, modulename):
 	modpackage = app.readConf('gwt2.modulespath')
 	if modpackage != "":
 		modpackage = modpackage + "."
-	 
+	else:
+	  modpackage = "gwt."
+
 	tmpfile = os.path.join(app.path, modules_path, modulename, 'client', 'GreetingService.java')
 	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_path, 'resources', 'GreetingService.java'), tmpfile)
 	replaceAll(tmpfile, r'\[modulename\]', modulename)

@@ -67,7 +67,7 @@ def execute(**kargs):
 	if modules_path != "":
 		kargs['modules_path'] = os.path.join('app', modules_path)
 	else:
-		kargs['modules_path'] = 'app'
+		kargs['modules_path'] = os.path.join('app', 'gwt')
 	
 	# Module path (this_path)
 	kargs['gwt2_module_path'] = module_path

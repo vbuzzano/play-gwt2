@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.0.1//EN" "http://google-web-toolkit.googlecode.com/svn/tags/2.0.1/distro-source/core/src/gwt-module.dtd">
-<module rename-to="gwtmodule">
+<module rename-to="[modulename]">
 	<inherits name="com.google.gwt.user.User" />
 
 	<!-- Inherit the default GWT style sheet.  You can change       -->
@@ -11,11 +11,11 @@
 	<!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
 	<!-- Other module inherits                                      -->
-
+    [othermodule]
+    
 	<!-- Specify the app entry point class.                         -->
-	<entry-point class="gwt.gwtmodule.client.classmodule"/>
+	[entrypointclass]
 
 	<!-- Specify the paths for translatable code                    -->
-	<source path='client' />
-	<source path='shared' />
+	[sourcepath]
 </module>	

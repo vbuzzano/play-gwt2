@@ -1,5 +1,5 @@
 ###############################################################################
-# GWT2 Clean Command - tested[2010-06-25]
+# GWT2 Clean Command - tested[2010-10-07]
 #
 # [gwt2:clean]
 # 
@@ -7,7 +7,7 @@
 #
 # @author Vincent Buzzano <vincent.buzzano@gmail.com>
 ###############################################################################
-import sys, os, string
+import sys, os, string, shutil
 from gwt2 import *
 
 def getCommands():
@@ -18,24 +18,25 @@ def getHelp():
 
 
 def execute(args):
-	gwt2_modules_path = args.get("gwt2_modules_path")
-	gwt2_public_path = args.get("gwt2_public_path")
 	application_path = args.get("app").path
+	public_path = args.get("public_path")
+	modules_path = args.get("modules_path")
+	gwt_path = args.get("gwt_path")
 	
 	# List all modules
-	gwtmodule = functions.askForModule(args, 'clean', True)
+	modulename = functions.askForModule(args, 'clean', True)
 	
 	# delete the  app
-	if not os.path.exists(os.path.join(application_path, gwt2_modules_path, gwtmodule)):
+	if not os.path.exists(os.path.join(application_path, modules_path, modulename)):
 		print "~"
-		print "~ Error: module " + gwtmodule + " not found."
+		print "~ Error: module " + modulename + " not found."
 		print "~"		
 		sys.exit(1)
 	
 	# clean public dir
-	if os.path.exists(os.path.join(application_path, gwt2_public_path, gwtmodule)):
-		shutil.rmtree(os.path.join(application_path, gwt2_public_path, gwtmodule))
+	if os.path.exists(os.path.join(application_path, public_path, modulename)):
+		shutil.rmtree(os.path.join(application_path, public_path, modulename))
 	
 	print "~"
-	print "~ GWT Module " + gwtmodule + " has been cleaned."
+	print "~ GWT Module " + modulename + " has been cleaned."
 	print "~"

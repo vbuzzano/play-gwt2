@@ -1,4 +1,4 @@
-package gwt.gwtmodule.client;
+package gwt.[modulename].client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -9,7 +9,11 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class classmodule implements EntryPoint {
+/**
+ * Generated Entry Point
+ * play-gwt2
+ */
+public class [classmodule] implements EntryPoint {
 	
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 	

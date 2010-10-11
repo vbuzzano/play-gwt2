@@ -7,6 +7,7 @@ import java.net.URL;
 
 import play.Logger;
 import play.Play;
+import play.data.validation.Validation;
 import play.exceptions.UnexpectedException;
 import play.libs.IO;
 import play.mvc.Router;
@@ -47,7 +48,7 @@ import com.google.gwt.user.server.rpc.SerializationPolicyProvider;
  * import play.modules.gwt2.GWTServicePath;
  * import gwt.mymod.client.HelloService;
  * 
- * @GWTServicePath("/main/hello")
+ * @GWT2ServicePath("/module/hello")
  * public class HelloServiceImpl extends GWTService implements HelloService {
  *     public String sayHello(String name) {
  *         return "Hello " + name;
@@ -59,7 +60,9 @@ import com.google.gwt.user.server.rpc.SerializationPolicyProvider;
  * @author Vincent Buzzano <vincent.buzzano@gmail.com>
  */
 public class GWT2Service implements SerializationPolicyProvider {
-
+  
+	protected Validation validation = Validation.current();
+	
 	protected Request request;
 	
 	public void setRequest(Request request) {

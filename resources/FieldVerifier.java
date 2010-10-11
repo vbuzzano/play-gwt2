@@ -1,4 +1,4 @@
-package gwt.gwtmodule.shared;
+package [modpackage][modulename].shared;
 
 /**
  * <p>

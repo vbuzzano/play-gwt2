@@ -20,9 +20,6 @@ def callModuleCommand(args):
 	module = None
 	command = args.get("command")
 	
-	if command == "gwt2:":
-		command = "gwt2:help"
-		
 	for file in os.listdir(command_path):
 		if file[-3:] == '.py' and file[0:2] != '__':
 			m = file[0:-3]+".getCommands()"
@@ -33,7 +30,6 @@ def callModuleCommand(args):
 	
 	if command != "" and module != None:
 		eval(module+'.execute(args)')
-
 
 ###############################################################################
 # Module Execute 
@@ -50,16 +46,10 @@ def execute(**kargs):
 	
 	# get args
 	play_remaining_args = kargs.get("args")
-		
+	
 	# gwt plublic path	
-	kargs['gwt2_public_path'] = "gwt-public"
+	kargs['public_path'] = "gwt-public"
 	
-	# gwt modules path
-	kargs['gwt2_modules_path'] = os.path.join("app","gwt")
-	
-	# Module path (this_path) 
-	kargs['module_path'] = module_path
-
 	# Check options
 	gwt_path = None
 	try:
@@ -71,6 +61,16 @@ def execute(**kargs):
 		print "~ %s" % str(err)
 		print "~ "
 		sys.exit(-1)
+	
+	# get module path
+	modules_path = app.readConf('gwt2.modulespath')
+	if modules_path != "":
+		kargs['modules_path'] = os.path.join('app', modules_path)
+	else:
+		kargs['modules_path'] = 'app'
+	
+	# Module path (this_path)
+	kargs['gwt2_module_path'] = module_path
 	
 	# if path has not been set via arguments, we check for OS variable
 	if not gwt_path and os.environ.has_key('GWT_PATH'):
@@ -107,7 +107,7 @@ def execute(**kargs):
 # commands list
 clist = []
 hlist = {}
-#clist.append('gwt2:')
+#clist.append('eclipsify')
 for file in os.listdir(command_path):
 	if file[-3:] == '.py' and file[0:2] != '__':
 		m = file[0:-3]+".getCommands()"

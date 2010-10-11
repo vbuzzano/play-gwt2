@@ -1,5 +1,5 @@
 ###############################################################################
-# GWT2 Clean All Command - tested[2010-06-25]
+# GWT2 Clean All Command - tested[2010-10-07]
 #
 # [gwt2:cleanall]
 # 
@@ -18,13 +18,17 @@ def getHelp():
 def execute(args):
 	
 	application_path = args.get("app").path
-	gwt2_modules_path = args.get("gwt2_modules_path")
-	gwt2_public_path =  args.get("gwt2_public_path")
+	public_path = args.get("public_path")
+	modules_path = args.get("modules_path")
+	gwt_path = args.get("gwt_path")
 	
-	for dir in os.listdir(os.path.join(application_path, gwt2_modules_path)):
-		pathmodule = os.path.join(application_path, gwt2_public_path, dir) 
-		if os.path.exists(pathmodule):		
-			shutil.rmtree(pathmodule)
-		print "~ " + dir + " has been cleaned."
+	path = os.path.join(application_path, modules_path)
+	for dir in os.listdir(path):
+		file = os.path.join(path, dir, dir.capitalize()+'.gwt.xml')
+		if os.path.exists(file):
+			pathmodule = os.path.join(application_path, public_path, dir) 
+			if os.path.exists(pathmodule):		
+				shutil.rmtree(pathmodule)
+			print "~ " + dir + " has been cleaned."
 	
 	print "~"

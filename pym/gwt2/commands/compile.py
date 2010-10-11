@@ -1,5 +1,5 @@
 ###############################################################################
-# GWT2 Compile Command - tested[2010-06-25]
+# GWT2 Compile Command - tested[2010-10-07]
 #
 # [gwt2:compile]
 # 
@@ -19,7 +19,7 @@ def getHelp():
 def execute(args):
 	
 	# List all modules
-	gwtmodule = functions.askForModule(args, 'compile', True)
+	modulename = functions.askForModule(args, 'compile', True)
 		
 	# Compile selected module
-	functions.compile(args, gwtmodule)
+	functions.compile(args, modulename)

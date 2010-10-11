@@ -1,5 +1,5 @@
 ###############################################################################
-# GWT2 Compile all Command - tested[2010-06-25]
+# GWT2 Compile all Command - tested[2010-10-07]
 #
 # [gwt2:compileall]
 # 
@@ -18,10 +18,13 @@ def getHelp():
 
 def execute(args):
 	application_path = args.get("app").path
-	gwt2_modules_path = args.get("gwt2_modules_path")
+	modules_path = args.get("modules_path")
 
 	print "~"
 	print "~ Compiling all modules ... "
 	print "~"
-	for dir in os.listdir(os.path.join(application_path, gwt2_modules_path)):
-		functions.compile(args, dir)
+	path = os.path.join(application_path, modules_path)
+	for dir in os.listdir(path):
+		file = os.path.join(path, dir, dir.capitalize()+'.gwt.xml')
+		if os.path.exists(file):
+			functions.compile(args, dir)

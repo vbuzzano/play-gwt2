@@ -1,16 +1,16 @@
-package gwt.gwtmodule.server;
+package [modpackage][modulename].server;
 
-import gwt.gwtmodule.client.GreetingService;
-import gwt.gwtmodule.shared.FieldVerifier;
+import [modpackage][modulename].client.GreetingService;
+import [modpackage][modulename].shared.FieldVerifier;
 
-import play.modules.gwt2.GWTService;
-import play.modules.gwt2.GWTServicePath;
+import play.modules.gwt2.GWT2Service;
+import play.modules.gwt2.GWT2ServicePath;
 
 
 import com.google.gwt.user.server.rpc.*;
  
-@GWTServicePath("/gwtmodule/greet")
-public class GreetingServiceImpl extends GWTService implements GreetingService {
+@GWT2ServicePath("/[modulename]/greet")
+public class GreetingServiceImpl extends GWT2Service implements GreetingService {
  
     public String greetServer(String name) {
 

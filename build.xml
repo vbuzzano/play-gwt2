@@ -27,6 +27,8 @@
                 <include name="**/*.xml"/>
                 <include name="**/play.plugins"/>
                 <include name="**/play.static"/>
+            	<include name="**/shared/*.java"/>
+            	<include name="**/client/*.java"/>
             </fileset>
         </copy>
         <jar destfile="lib/play-gwt2.jar" basedir="tmp/classes">

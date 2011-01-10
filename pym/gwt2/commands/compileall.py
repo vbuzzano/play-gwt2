@@ -1,5 +1,5 @@
 ###############################################################################
-# GWT2 Compile all Command - tested[2010-10-07]
+# GWT2 Compile all Command - tested[2011-01-10]
 #
 # [gwt2:compileall]
 # 
@@ -25,6 +25,7 @@ def execute(args):
 	print "~"
 	path = os.path.join(application_path, modules_path)
 	for dir in os.listdir(path):
-		file = os.path.join(path, dir, dir.capitalize()+'.gwt.xml')
-		if os.path.exists(file):
-			functions.compile(args, dir)
+		if (dir[0] != '.'):
+			file = os.path.join(path, dir, dir.capitalize()+'.gwt.xml')
+			if os.path.exists(file):
+				functions.compile(args, dir)

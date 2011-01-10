@@ -1,5 +1,5 @@
 ###############################################################################
-# GWT2 Dev Mode Command - tested[2010-06-25]
+# GWT2 Dev Mode Command - tested[2011-01-10]
 #
 # [gwt2:devmode]
 # 
@@ -37,8 +37,9 @@ def execute(args):
 	modulename = []
 	print "~ Loading modules : "
 	for dir in os.listdir(os.path.join(application_path, modules_path)):
-		modulename.append(dir)
-		print " - " + dir
+		if dir[0] != '.':
+			modulename.append(dir)
+			print " - " + dir
 	print "~"
 	
 	# append classpath

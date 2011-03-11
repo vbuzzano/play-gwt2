@@ -19,21 +19,24 @@ import play.mvc.results.RenderText;
  * based on the GWT Plugin by **Rustem Suniev**.
  */
 public class GWT2Plugin extends PlayPlugin {
+    private static final String DEFAULT_PATH = "/app";
 
     @Override
     public void onRoutesLoaded() {
-        boolean useDefault = true;
-        for (Route route : Router.routes) {
-            if (route.action.contains("gwt-public")) {
-                useDefault = false;
-                break;
-            }
-        }
-
+        boolean useDefault = findRoute()==null;
         if (useDefault) {
-            Router.addRoute("GET", "/app", "staticDir:gwt-public");
+            Router.addRoute("GET", DEFAULT_PATH, "staticDir:gwt-public");
         }
         Router.addRoute("GET", "/@gwt", "dummy.dummy"); // protect it
+    }
+
+    private Route findRoute(){
+        for (Route route : Router.routes) {
+            if (route.action.contains("gwt-public")) {
+                return route;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -43,9 +46,16 @@ public class GWT2Plugin extends PlayPlugin {
         }
         // Hand made routing;
         if (request.method == "POST") {
+
+            final Route route = findRoute();
+            String routePath = route!=null? route.path: DEFAULT_PATH;
+            if(routePath.endsWith("/")){
+                routePath = routePath.substring(0, routePath.length()-1);
+            }
+
             for (Class<?> service : Play.classloader.getAnnotatedClasses(GWT2ServicePath.class)) {
                 String path = ((GWT2ServicePath) service.getAnnotation(GWT2ServicePath.class)).value();
-                if (request.path.equals("/app"+path)) {
+                if (request.path.equals(routePath+path)) {
                     invokeService(service, request);
                     break;
                 }

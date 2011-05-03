@@ -25,7 +25,9 @@ public class GWT2Plugin extends PlayPlugin {
     public void onRoutesLoaded() {
         boolean useDefault = findRoute()==null;
         if (useDefault) {
-            Router.addRoute("GET", DEFAULT_PATH, "staticDir:gwt-public");
+        	String staticDir = "staticDir" + 
+        		Play.configuration.getProperty("gwt2.publicpath", "gwt-public");
+        	Router.addRoute("GET", DEFAULT_PATH, staticDir);
         }
         Router.addRoute("GET", "/@gwt", "dummy.dummy"); // protect it
     }
@@ -44,6 +46,7 @@ public class GWT2Plugin extends PlayPlugin {
         if (request.path.equals("/@gwt")) {
             throw new RedirectToStatic(Router.reverse(Play.getVirtualFile("/gwt-public/index.html")));
         }
+        System.out.println(request.querystring);
         // Hand made routing;
         if (request.method == "POST") {
 

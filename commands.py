@@ -40,7 +40,7 @@ def execute(**kargs):
 	
 	# get application
 	app = kargs.get("app")
-	
+
 	# get env
 	env = kargs.get("env")
 	
@@ -48,7 +48,9 @@ def execute(**kargs):
 	play_remaining_args = kargs.get("args")
 	
 	# gwt plublic path	
-	kargs['public_path'] = "gwt-public"
+	kargs['public_path'] = app.readConf('gwt2.publicpath')
+	if kargs['public_path'] == None:
+		kargs['public_path'] = 'gwt-public'
 	
 	# Check options
 	gwt_path = None

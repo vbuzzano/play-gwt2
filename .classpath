@@ -2,7 +2,11 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+<<<<<<< HEAD
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PLAY-1.1.0"/>
+=======
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PLAY-1.2"/>
+>>>>>>> master
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/GWT-2.2.0"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

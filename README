@@ -1,28 +1,46 @@
 GWT2 Plugin for Play!
 by Vincent Buzzano
 
-Current version is 1.3 for play 1.1
+Current version is 1.4 for play 1.2
 Project Webstie: http://github.com/vbuzzano/play-gwt2
 
-I have started this project to use version 2.x of GWT with play! framework.
+This module has been tested with gwt 2.2.0.
 
 QUICK START
 -------------------------------------
-To install this module:
+First of all, set the path of your gwt home
+> export $GWT_HOME=<path to gwt folder>
+
+Edit <myApp>/conf/dependencies.yml files, and add gwt2 module:
+~# Application dependencies
+~require:
+~    - play
+~    - play -> gwt2 1.4
+
+Skip the next command if you want to install the module directly in the "modules" folder of your application. Otherwise the module will be installed in play! framework.
 > play install gwt2
 
-Then edit the conf/application.conf file to enable the GWTmodule :
-> notepad conf/application.conf
+To add gwt2 module to your application, play dependencies management
+> play deps <myApp>
 
 Then init your porject with:
-> play gwt2:init <project>
+> play gwt2:init <myApp>
+
+During initialisation, gwt2 module will copy gwt-user.jar in your application lib folder.
+
+if you want, you can remove it and add gwt-user to your conf/dependencies.yml
+~# Application dependencies
+~require:
+~    - play
+~    - play -> gwt2 1.4
+~    - com.google -> gwt-user 2.2.0
+then run "play deps" again
 
 After init create you first gwt module:
-> play gwt2:create <project>
+> play gwt2:create <myApp>
 
 And test it:
-> play gwt2:devmode <project>
-
+> play gwt2:devmode <myApp>
 
 
 PLAY SHELL COMMANDS:
@@ -35,21 +53,21 @@ This will display GWT2 Plugin for Play! commands help.
 
 HISTORY
 --------------------------------------
-1.0 first buggy released based on play-gwt by Rustem Suniev
-1.1 first offical released. Bug fixed.
-1.2 Improve documentation and commands shell. 
-	- Rewrite command.py
-    - Add compilation command
-    - Add clean command
-    - Improve devmode launch
-    - Change Plugin Class name for compatibility with 1st GwT Plugin
+1.4 Upgrade plugin for play! 1.2
+	 - update documentation
+     - bug fix
 1.3 Upgrade plugin for play! 1.1
 	- Improved command line system
     - Add Play Model support Documentation
     - Add samples
     - Add GWT Modules path to Play Configuration
     - Fix lot of bugs
-
-    
-
+1.2 Improve documentation and commands shell. 
+	- Rewrite command.py
+    - Add compilation command
+    - Add clean command
+    - Improve devmode launch
+    - Change Plugin Class name for compatibility with 1st GwT Plugin
+1.1 first offical released. Bug fixed.
+1.0 first buggy released based on play-gwt by Rustem Suniev
 

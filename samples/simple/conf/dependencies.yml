@@ -1,0 +1,7 @@
+# Application dependencies
+
+require:
+    - play
+    - play -> gwt2 1.4
+    - com.google.gwt -> gwt-user 2.2.0
+

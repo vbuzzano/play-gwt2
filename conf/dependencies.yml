@@ -1,0 +1,6 @@
+self: play -> gwt2 1.4
+
+require:
+    - play
+
+

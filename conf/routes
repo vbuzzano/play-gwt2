@@ -4,3 +4,8 @@
 # *     /                       module:play-gwt2
 #
 # ~~~~
+%{
+ ppath = play.Play.configuration.getProperty("gwt2.publicpath", "gwt-public")
+}%
+
+*    /${ppath}/{module}/{service}	GWT2Controller.invoke

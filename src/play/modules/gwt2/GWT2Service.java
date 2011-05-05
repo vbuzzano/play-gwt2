@@ -10,9 +10,11 @@ import play.Play;
 import play.data.validation.Validation;
 import play.exceptions.UnexpectedException;
 import play.libs.IO;
-import play.mvc.Router;
 import play.mvc.Http.Request;
+import play.mvc.Http.Response;
+import play.mvc.Router;
 import play.mvc.Router.Route;
+import play.mvc.Scope.Session;
 import play.mvc.results.RenderStatic;
 
 import com.google.gwt.user.server.rpc.RPC;
@@ -64,9 +66,25 @@ public class GWT2Service implements SerializationPolicyProvider {
 	protected Validation validation = Validation.current();
 	
 	protected Request request;
+	protected Response response;
+	protected Session session;
+	
+	protected String payload;
 	
 	public void setRequest(Request request) {
 		this.request = request;
+	}
+
+	public void setResponse(Response response) {
+		this.response = response;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
+
+	public void setPlayLoad(String pl) {
+		payload = pl;
 	}
 	
     public final SerializationPolicy getSerializationPolicy(String moduleBaseURL, String strongName) {
@@ -139,7 +157,6 @@ public class GWT2Service implements SerializationPolicyProvider {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         try {
             Thread.currentThread().setContextClassLoader(Play.classloader);
-            String payload = IO.readContentAsString(Request.current().body);
             RPCRequest rpcRequest = RPC.decodeRequest(payload, this.getClass(), this);
             return RPC.invokeAndEncodeResponse(this, rpcRequest.getMethod(), rpcRequest.getParameters(), rpcRequest.getSerializationPolicy());
         } catch (Exception ex) {

@@ -7,6 +7,10 @@ import play.mvc.Controller;
 
 public class GWT2Controller extends Controller {
 	
+	public boolean isGWT() {
+		return request.contentType.equals("text/x-gwt-rpc");
+	}
+	
 	public static void invoke(String module, String service) {
 
 		GWT2Module mod = GWT2Plugin.getModule(module, service);
@@ -25,6 +29,5 @@ public class GWT2Controller extends Controller {
 
 	private static void renderGWT(Object ret) {
 		renderText(ret);
-		
 	}
 }

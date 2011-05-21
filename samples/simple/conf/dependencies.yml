@@ -2,6 +2,6 @@
 
 require:
     - play
-    - play -> gwt2 1.4
+    - play -> gwt2 1.5
     - com.google.gwt -> gwt-user 2.2.0
 

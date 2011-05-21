@@ -1,4 +1,4 @@
-package [modpackage][modulename].server;
+package [modpackage][modulename].services;
 
 import [modpackage][modulename].client.GreetingService;
 import [modpackage][modulename].shared.FieldVerifier;

@@ -7,6 +7,7 @@ This module has been tested with play 1.2 and gwt 2.2.0
 p. In the version 1.5
  - GWT Service are executed async, using Jobs.
  - No more need to use annotation @GWT2ServicePath. Just name your service as in the annotation @RemoteServiceRelativePath and place the class in the sub package services.
+ - Add tag #{gwt2.module 'mymodule'/} to easly load a module script in a page
 
 h2. <a>Installation</a>
 

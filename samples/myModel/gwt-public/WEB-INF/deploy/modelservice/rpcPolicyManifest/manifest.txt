@@ -1,0 +1,3 @@
+# Module modelservice
+# RPC service class, partial path of RPC policy file
+gwt.modelservice.client.MyModelService, F262D60926AD7B449C938C8E24175D18.gwt.rpc

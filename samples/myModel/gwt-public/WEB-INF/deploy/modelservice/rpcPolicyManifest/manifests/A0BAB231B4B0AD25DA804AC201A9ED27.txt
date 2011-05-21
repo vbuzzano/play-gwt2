@@ -1,0 +1,2 @@
+serviceClass: gwt.modelservice.client.MyModelService
+path: F262D60926AD7B449C938C8E24175D18.gwt.rpc

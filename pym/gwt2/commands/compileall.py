@@ -18,12 +18,12 @@ def getHelp():
 
 def execute(args):
 	application_path = args.get("app").path
-	modules_path = args.get("modules_path")
+	modules_dir = args.get("modules_dir")
 
 	print "~"
 	print "~ Compiling all modules ... "
 	print "~"
-	path = os.path.join(application_path, modules_path)
+	path = os.path.join(application_path, modules_dir)
 	for dir in os.listdir(path):
 		if (dir[0] != '.'):
 			file = os.path.join(path, dir, dir.capitalize()+'.gwt.xml')

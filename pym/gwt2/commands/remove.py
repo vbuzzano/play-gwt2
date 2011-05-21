@@ -19,25 +19,25 @@ def getHelp():
 
 def execute(args):
 	application_path = args.get("app").path
-	public_path = args.get("public_path")
-	modules_path = args.get("modules_path")
+	public_dir = args.get("public_dir")
+	modules_dir = args.get("modules_dir")
 	gwt_path = args.get("gwt_path")
 	
 	# List all modules
 	modulename = functions.askForModule(args, 'remove', True)
 	
 	# delete the  app
-	if not os.path.exists(os.path.join(application_path, modules_path, modulename)):
+	if not os.path.exists(os.path.join(application_path, modules_dir, modulename)):
 		print "~"
 		print "~ Error: module " + modulename + " not found."
 		print "~"		
 		sys.exit(1)
 	
-	if os.path.exists(os.path.join(application_path, modules_path, modulename)):
-		shutil.rmtree(os.path.join(application_path, modules_path, modulename))
+	if os.path.exists(os.path.join(application_path, modules_dir, modulename)):
+		shutil.rmtree(os.path.join(application_path, modules_dir, modulename))
 	
-	if os.path.exists(os.path.join(application_path, public_path, modulename)):
-		shutil.rmtree(os.path.join(application_path, public_path, modulename))
+	if os.path.exists(os.path.join(application_path, public_dir, modulename)):
+		shutil.rmtree(os.path.join(application_path, public_dir, modulename))
 	
 	print "~"
 	print "~ Ok. Your GWT module has been deleted "

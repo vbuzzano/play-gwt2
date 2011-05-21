@@ -19,7 +19,7 @@ def listModules(args):
 	print "~"
 	count = 1
 	app = args.get('app')
-	path = os.path.join(app.path, args.get("modules_path"))
+	path = os.path.join(app.path, args.get("modules_dir"))
 	if os.path.exists(path):
 		for dir in os.listdir(path):
 			file = os.path.join(path, dir, dir.capitalize()+'.gwt.xml')
@@ -55,13 +55,13 @@ def compile(args, modulename):
 	app = args.get("app")
 	env = args.get("env")
 	application_path = args.get("app").path
-	gwt2_module_path = args.get("gwt2_module_path")
-	modules_path = args.get("modules_path")
-	public_path = args.get("public_path")
+	gwt2_module_dir = args.get("gwt2_module_dir")
+	modules_dir = args.get("modules_dir")
+	public_dir = args.get("public_dir")
 	gwt_path = args.get("gwt_path")
 	
 	# if module exists
-	if os.path.exists(os.path.join(application_path, modules_path, modulename)):
+	if os.path.exists(os.path.join(application_path, modules_dir, modulename)):
 		# Compile GWT Module
 		print "~ Compiling GWT Module " + modulename + " ..."
 		print "~"
@@ -74,7 +74,7 @@ def compile(args, modulename):
 		for f in os.listdir(path):
 			if f.startswith("hibernate-jpa"):
 				cp.append(f)
-		cp.append(os.path.normpath(os.path.join(gwt2_module_path, 'hack')))
+		cp.append(os.path.normpath(os.path.join(gwt2_module_dir, 'hack')))
 		cp.append(os.path.normpath(os.path.join(application_path, 'app')))
 		cp.append(os.path.normpath(os.path.join(application_path, 'lib/gwt-user.jar')))
 		cp.append(os.path.normpath(os.path.join(gwt_path, 'gwt-dev.jar')))
@@ -88,7 +88,7 @@ def compile(args, modulename):
 			cps = ':'.join(cp)
 			cps = cps + ':' + app.cp_args()
 		java_path = app.java_path()
-		gwt_cmd = [java_path, '-Xmx256M', '-classpath', cps, 'com.google.gwt.dev.Compiler', '-style', 'OBF', '-war', os.path.normpath(os.path.join(application_path, public_path)), 'gwt.'+modulename+"."+modulename.capitalize()]
+		gwt_cmd = [java_path, '-Xmx256M', '-classpath', cps, 'com.google.gwt.dev.Compiler', '-style', 'OBF', '-war', os.path.normpath(os.path.join(application_path, public_dir)), 'gwt.'+modulename+"."+modulename.capitalize()]
 		subprocess.call(gwt_cmd, env=os.environ)
 		print "----------------------------------------------"
 		print "~"

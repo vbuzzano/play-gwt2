@@ -57,6 +57,7 @@ def compile(args, modulename):
 	application_path = args.get("app").path
 	gwt2_module_dir = args.get("gwt2_module_dir")
 	modules_dir = args.get("modules_dir")
+	base_classpath = args.get("modules_base_classpath")
 	public_dir = args.get("public_dir")
 	gwt_path = args.get("gwt_path")
 	
@@ -88,7 +89,7 @@ def compile(args, modulename):
 			cps = ':'.join(cp)
 			cps = cps + ':' + app.cp_args()
 		java_path = app.java_path()
-		gwt_cmd = [java_path, '-Xmx256M', '-classpath', cps, 'com.google.gwt.dev.Compiler', '-style', 'OBF', '-war', os.path.normpath(os.path.join(application_path, public_dir)), 'gwt.'+modulename+"."+modulename.capitalize()]
+		gwt_cmd = [java_path, '-Xmx256M', '-classpath', cps, 'com.google.gwt.dev.Compiler', '-style', 'OBF', '-war', os.path.normpath(os.path.join(application_path, public_dir)), base_classpath + modulename+"."+modulename.capitalize()]
 		subprocess.call(gwt_cmd, env=os.environ)
 		print "----------------------------------------------"
 		print "~"

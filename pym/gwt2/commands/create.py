@@ -27,6 +27,9 @@ def execute(args):
 	
 	# play-gwt2 module dir
 	gwt2_module_dir = args.get("gwt2_module_dir")
+
+	# base classpath
+	base_classpath = args.get("modules_base_classpath")
 	
 	# get a name for the module
 	modulename = raw_input('~ Enter a gwt module name : ')
@@ -39,10 +42,12 @@ def execute(args):
 		print "~"		
 		sys.exit(1)
 	
-	createModule(app, env, gwt2_module_dir, modules_dir, modulename)
+	createModule(app, env, gwt2_module_dir, modules_dir, modulename, base_classpath)
 
 # Create Module
-def createModule(app, env, gwt2_module_dir, modules_dir, modulename):
+def createModule(app, env, gwt2_module_dir, modules_dir, modulename, base_classpath):
+	modpackage = base_classpath;
+
 	# make structure
 	modulesdir = os.path.join(app.path, modules_dir)
 	if not os.path.exists(modulesdir): 
@@ -51,7 +56,7 @@ def createModule(app, env, gwt2_module_dir, modules_dir, modulename):
 	os.mkdir(os.path.join(modulesdir, modulename, 'public'))
 	os.mkdir(os.path.join(modulesdir, modulename, 'client'))
 	os.mkdir(os.path.join(modulesdir, modulename, 'shared'))
-	os.mkdir(os.path.join(modulesdir, modulename, 'server'))
+	os.mkdir(os.path.join(modulesdir, modulename, 'services'))
 
 	# copy index.html
 	file = os.path.join(modulesdir, modulename, 'public', 'index.html')
@@ -63,22 +68,17 @@ def createModule(app, env, gwt2_module_dir, modules_dir, modulename):
 	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources', 'Main.java'), file)
 	replaceAll(file, r'\[modulename\]', modulename)
 	replaceAll(file, r'\[classmodule\]', modulename.capitalize())	
+	replaceAll(file, r'\[modpackage\]', modpackage)
 	
 	# copy app def
 	file = os.path.join(modulesdir, modulename, modulename.capitalize()+'.gwt.xml')
 	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources', 'Main.gwt.xml'), file)
 	replaceAll(file, r'\[modulename\]', modulename)
-	replaceAll(file, r'\[entrypointclass\]', '<entry-point class="gwt.'+modulename+'.client.'+ modulename.capitalize() +'"/>')
+	replaceAll(file, r'\[entrypointclass\]', '<entry-point class="' + modpackage + modulename+'.client.'+ modulename.capitalize() +'"/>')
 	replaceAll(file, r'\[sourcepath\]', "<source path='client'/>\n	<source path='shared'/>")
 	replaceAll(file, r'\[othermodule\]', "<inherits name='App' />")
 	
 	# copy service class	
-	modpackage = app.readConf('gwt2.modulespath')
-	if modpackage != "":
-		modpackage = modpackage + "."
-	else:
-	  modpackage = "gwt."
-
 	tmpfile = os.path.join(app.path, modules_dir, modulename, 'client', 'GreetingService.java')
 	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources', 'GreetingService.java'), tmpfile)
 	replaceAll(tmpfile, r'\[modulename\]', modulename)
@@ -89,8 +89,8 @@ def createModule(app, env, gwt2_module_dir, modules_dir, modulename):
 	replaceAll(tmpfile, r'\[modulename\]', modulename)
 	replaceAll(tmpfile, r'\[modpackage\]', modpackage)
 	
-	tmpfile = os.path.join(app.path, modules_dir, modulename, 'server', 'GreetingServiceImpl.java')
-	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources', 'GreetingServiceImpl.java'), tmpfile)
+	tmpfile = os.path.join(app.path, modules_dir, modulename, 'services', 'Greeting.java')
+	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources', 'Greeting.java'), tmpfile)
 	replaceAll(tmpfile, r'\[modulename\]', modulename)
 	replaceAll(tmpfile, r'\[modpackage\]', modpackage)
 	

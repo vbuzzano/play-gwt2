@@ -61,6 +61,9 @@ def execute(**kargs):
 	modules_dir = app.readConf('gwt2.modulesdir')
 	if modules_dir == "":
 		modules_dir = 'gwt'
+
+	kargs['modules_base_classpath'] = modules_dir.replace(os.sep,".") + "."
+	
 	kargs['modules_dir'] = os.path.join('app', modules_dir)
 	
 	# Module path (this_path)

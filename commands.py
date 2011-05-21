@@ -3,11 +3,11 @@
 # by Vincent Buzzano <vincent.buzzano@gmail.com>
 ###############################################################################
 import getopt, sys, os, inspect
-global module_path, command_path
-module_path = inspect.getfile(inspect.currentframe()).replace("commands.py","")
-command_path = os.path.join(module_path, "pym", "gwt2", "commands")
+global gwt2_module_dir, command_dir
+gwt2_module_dir = inspect.getfile(inspect.currentframe()).replace("commands.py","")
+command_dir = os.path.join(gwt2_module_dir, "pym", "gwt2", "commands")
 
-sys.path.append(os.path.join(module_path, "pym"))
+sys.path.append(os.path.join(gwt2_module_dir, "pym"))
 from gwt2 import *
 from gwt2.commands import *
 from play.utils import *
@@ -16,11 +16,11 @@ from play.utils import *
 # Call a module command 
 ###############################################################################
 def callModuleCommand(args):
-	global command_path
+	global command_dir
 	module = None
 	command = args.get("command")
 	
-	for file in os.listdir(command_path):
+	for file in os.listdir(command_dir):
 		if file[-3:] == '.py' and file[0:2] != '__':
 			m = file[0:-3]+".getCommands()"
 			cmd = eval(m)
@@ -47,10 +47,24 @@ def execute(**kargs):
 	# get args
 	play_remaining_args = kargs.get("args")
 	
-	# gwt plublic path	
+	# gwt plublic path
 	kargs['public_path'] = app.readConf('gwt2.publicpath')
-	if kargs['public_path'] == None:
-		kargs['public_path'] = 'gwt-public'
+	if kargs['public_path'] == None or kargs['public_path'] == '':
+		kargs['public_path'] = '/app'
+
+	# gwt plublic dir
+	kargs['public_dir'] = app.readConf('gwt2.publicdir')
+	if kargs['public_dir'] == None or kargs['public_dir'] == '':
+		kargs['public_dir'] = 'gwt-public'
+
+	# get modules dir
+	modules_dir = app.readConf('gwt2.modulesdir')
+	if modules_dir == "":
+		modules_dir = 'gwt'
+	kargs['modules_dir'] = os.path.join('app', modules_dir)
+	
+	# Module path (this_path)
+	kargs['gwt2_module_dir'] = gwt2_module_dir
 	
 	# Check options
 	gwt_path = None
@@ -63,17 +77,7 @@ def execute(**kargs):
 		print "~ %s" % str(err)
 		print "~ "
 		sys.exit(-1)
-	
-	# get module path
-	modules_path = app.readConf('gwt2.modulespath')
-	if modules_path != "":
-		kargs['modules_path'] = os.path.join('app', modules_path)
-	else:
-		kargs['modules_path'] = os.path.join('app', 'gwt')
-	
-	# Module path (this_path)
-	kargs['gwt2_module_path'] = module_path
-	
+		
 	# if path has not been set via arguments, we check for OS variable
 	if not gwt_path and os.environ.has_key('GWT_PATH'):
 		gwt_path = os.path.normpath(os.path.abspath(os.environ['GWT_PATH']))
@@ -110,7 +114,7 @@ def execute(**kargs):
 clist = []
 hlist = {}
 #clist.append('eclipsify')
-for file in os.listdir(command_path):
+for file in os.listdir(command_dir):
 	if file[-3:] == '.py' and file[0:2] != '__':
 		m = file[0:-3]+".getCommands()"
 		cmd = eval(m)

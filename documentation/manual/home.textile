@@ -276,6 +276,11 @@ This sample is just a basic gwt module create with:
 2. myModel
 This sample is an basic gwt module wich use Play Model.
 
+to test a sample
+a. cd> go to the sample folder
+b. run> play deps
+c. run> play gwt:compileall
+d. run> play run
 
 h2. <a>About</a>
 

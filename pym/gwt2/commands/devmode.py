@@ -20,6 +20,7 @@ def execute(args):
 	application_path = args.get("app").path
 	gwt2_module_dir = args.get("gwt2_module_dir")
 	modules_dir = args.get("modules_dir")
+	base_classpath = args.get("modules_base_classpath")
 	public_dir =  args.get("public_dir")
 	public_path =  args.get("public_path")
 	gwt_path = args.get("gwt_path") 
@@ -67,7 +68,7 @@ def execute(args):
 
 	# append modules
 	for modul in modulename:
-		gwt_cmd.append('gwt.'+modul+'.'+modul.capitalize())
+		gwt_cmd.append(base_classpath+modul+'.'+modul.capitalize())
 	for modul in modulename:
 		gwt_cmd.append('-startupUrl')
 		gwt_cmd.append('http://localhost:' + app.readConf('http.port') + '/' + public_path + '/'+modul+'/index.html')

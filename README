@@ -1,7 +1,7 @@
 GWT2 Plugin for Play!
 by Vincent Buzzano
 
-Current version is 1.4 for play 1.2
+Current version is 1.5 for play 1.2
 Project Webstie: http://github.com/vbuzzano/play-gwt2
 
 This module has been tested with gwt 2.2.0.
@@ -15,7 +15,7 @@ Edit <myApp>/conf/dependencies.yml files, and add gwt2 module:
 ~# Application dependencies
 ~require:
 ~    - play
-~    - play -> gwt2 1.4
+~    - play -> gwt2 1.5
 
 Skip the next command if you want to install the module directly in the "modules" folder of your application. Otherwise the module will be installed in play! framework.
 > play install gwt2
@@ -32,7 +32,7 @@ if you want, you can remove it and add gwt-user to your conf/dependencies.yml
 ~# Application dependencies
 ~require:
 ~    - play
-~    - play -> gwt2 1.4
+~    - play -> gwt2 1.5
 ~    - com.google -> gwt-user 2.2.0
 then run "play deps" again
 
@@ -53,6 +53,15 @@ This will display GWT2 Plugin for Play! commands help.
 
 HISTORY
 --------------------------------------
+1.5 Big Update
+	 - update documentation
+     - fix 500 error problem with 1.2 and new application
+     - change route loading and invoker
+     - Improve gwt Service invokation with async call.
+     - redefine configuration fields (gwt.publicdir, gwt.publicpath, gwt.modulesdir)
+     - improve devmode (take care about publicpath) and add main application path
+     - New Service system. No more need for annotation GWT2ServicePath. Just add a new service name your service
+       as the @RemoteServiceRelativePath value but with Capitalization in <gwt.(yourmodule.)services>
 1.4 Upgrade plugin for play! 1.2
 	 - update documentation
      - bug fix

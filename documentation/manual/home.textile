@@ -1,9 +1,13 @@
-h1. <a>Play GWT2 Module Version 1.4</a>
+h1. <a>Play GWT2 Module Version 1.5</a>
 
-p.  Play GWT2 1.4 provides some classes and commands to simplify the integration of a GWT 2.2.0 Module in a play application. 
+p.  Play GWT2 1.5 provides some classes and commands to simplify the integration of a GWT 2.2.0 Module in a play application. 
  
 This module has been tested with play 1.2 and gwt 2.2.0
- 
+
+p. In the version 1.5
+ - GWT Service are executed async, using Jobs.
+ - No more need to use annotation @GWT2ServicePath. Just name your service as in the annotation @RemoteServiceRelativePath and place the class in the sub package services.
+
 h2. <a>Installation</a>
 
 p. 1. This module does not includes GWT SDK. You will need to download it. ( version 2.0.0 )
@@ -25,7 +29,7 @@ p. 5. Edit <myApp>/conf/dependencies.yml files, and add gwt2 module:
 bc. ~# Application dependencies
 ~require:
 ~    - play
-~    - play -> gwt2 1.4
+~    - play -> gwt2 1.5
 
 p. 6. Install GWT2 module.
 
@@ -45,12 +49,27 @@ p. this will
  - create a folder in your application : myApp/app/gwt (directory for gwt modules)
  - create a folder in your application : myApp/gwt-public (directory for GWT compiled resources)
  - and copy gwt-user.jar to myApp/lib
+ - Add a default App.gwt.xml in your myApp
 
 if you want to change get path for you gwt modules, edit the conf/application.conf file and add theese lines
 
 bc. # GWT2 Configuration
+#
+#  CONFIGURATION HAS CHANGED
 # ~~~~~
-# gwt2.modulespath=myfolder
+# gwt2.modulesdir=<modulesdir> 
+# it will be use to know where are gwt modules
+# default: gwt
+#
+# gwt2.publicdir=<publicdir>
+# it will be use to know where are the public directory for compiled module and for routing
+# default: gwt-public
+#
+# gwt.publicpath=/<path>
+# it will be use for routing configuration
+# default: /app
+#
+#
 
 then you can set you personal folder to use
 
@@ -59,7 +78,7 @@ if you want to manage the gwt-user.jar with play dependencies, add gwt-user to y
 bc. ~# Application dependencies
 ~require:
 ~    - play
-~    - play -> gwt2 1.4
+~    - play -> gwt2 1.5
 ~    - com.google -> gwt-user 2.2.0
 
 Remove lib/gwt-user.jar
@@ -95,12 +114,14 @@ myApp/app/gwt/firstmodule/client/GreetingService.java
 myApp/app/gwt/firstmodule/client/GreetingServiceAsync.java
 myApp/app/gwt/firstmodule/shared
 myApp/app/gwt/firstmodule/shared/FieldVerifier.java
-myApp/app/gwt/firstmodule/server
-myApp/app/gwt/firstmodule/server/GreetingServiceImpl.java
+myApp/app/gwt/firstmodule/services
+myApp/app/gwt/firstmodule/services/Greeting.java
 
-p. GreetingService Interface must use annotation @RemoteServiceRelativePath("greet")
+p. GreetingService Interface must use annotation @RemoteServiceRelativePath("greeting")
 
-p. GreetingServiceImpl.java must implements GWTService and use @GWT2ServicePath("/firstmodule/greet") annotation
+p. Service Implementation must implements GWTService, be place in the package gwt.<module>.services, and named as define in annotation @RemoteServiceRelativePath
+
+p. Or if you want to place your service or name it differently, eg: GreetingServiceImpl.java, you must use @GWT2ServicePath("/firstmodule/greet") annotation
 
 
 h2. <a>Testing you GWT Module with dev mode</a>

@@ -91,6 +91,12 @@ then run "play deps" again
 bc. > play deps
 
 
+h2. <a>Update your route file</a>
+
+Update your route file to add gwt2 dynamic routing
+
+bc. *		/      module:gwt2
+
 h2. <a>Create a GWT Module</a> 
  
 create your module like this:

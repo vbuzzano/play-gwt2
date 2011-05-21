@@ -14,7 +14,7 @@
     if (!_module) {
         throw new play.exceptions.TagInternalException("module attribute cannot be empty for gwt2.module tag");
     }
-    _module = "/" + play.Play.configuration.getProperty("gwt2.publicpath", "gwt-public") + "/" + _module + "/" + _module + ".nocache.js"
+    _module = "/" + play.modules.gwt2.GWT2Plugin.publicDir() + "/" + _module + "/" + _module + ".nocache.js"
     try {
         _abs = play.mvc.Router.reverseWithCheck(_src, play.Play.getVirtualFile(_module), false);
     } catch (Exception ex) {

@@ -3,4 +3,4 @@ bin/*
 *.class
 *.pyc
 */tmp/*
-
+dist/*

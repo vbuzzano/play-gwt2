@@ -5,7 +5,7 @@ import play.exceptions.JavaExecutionException;
 import play.exceptions.PlayException;
 import play.jobs.Job;
 import play.libs.IO;
-import play.modules.gwt2.GWT2Module;
+import play.modules.gwt2.GWT2Plugin.GWT2Module;
 import play.modules.gwt2.GWT2Service;
 import play.mvc.Http.Request;
 import play.mvc.Http.Response;

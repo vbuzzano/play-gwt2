@@ -1,11 +1,13 @@
-# This file defines all module routes (Higher priority routes first)
+ file defines all module routes (Higher priority routes first)
 #
 # import these routes in the main app as :
-# *     /                       module:play-gwt2
+# *     /                       module:gwt2
 #
 # ~~~~
 %{
- ppath = play.Play.configuration.getProperty("gwt2.publicpath", "gwt-public")
+ ppath = play.Play.configuration.getProperty("gwt2.publicpath", "/app");
+ pdir = play.Play.configuration.getProperty("gwt2.publicdir", "gwt-public");
 }%
 
-*    /${ppath}/{module}/{service}	GWT2Controller.invoke
+POST ${ppath}/{module}/{service}	GWT2Controller.invoke
+GET  ${ppath}/                      ${'staticDir:' + pdir}

@@ -9,7 +9,6 @@ import play.Logger;
 import play.Play;
 import play.data.validation.Validation;
 import play.exceptions.UnexpectedException;
-import play.libs.IO;
 import play.mvc.Http.Request;
 import play.mvc.Http.Response;
 import play.mvc.Router;

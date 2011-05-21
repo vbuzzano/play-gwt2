@@ -1,8 +1,8 @@
 package controllers;
 
 import jobs.GWT2Invoker;
-import play.modules.gwt2.GWT2Module;
 import play.modules.gwt2.GWT2Plugin;
+import play.modules.gwt2.GWT2Plugin.GWT2Module;
 import play.mvc.Controller;
 
 public class GWT2Controller extends Controller {

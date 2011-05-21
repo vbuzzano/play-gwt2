@@ -7,7 +7,6 @@ import play.Play;
 import play.PlayPlugin;
 import play.mvc.Http.Request;
 import play.mvc.Router;
-import play.mvc.Router.Route;
 import play.mvc.results.RedirectToStatic;
 
 /**
@@ -19,26 +18,25 @@ import play.mvc.results.RedirectToStatic;
  * based on the GWT Plugin by **Rustem Suniev**.
  */
 public class GWT2Plugin extends PlayPlugin {
-    private static final String DEFAULT_PATH = "/app";
 
+	/**
+	 * Default public path
+	 */
+    private static final String DEFAULT_PATH = "/app";
+    
+    /**
+     * Default public directory
+     */
+    private static final String DEFAULT_PUBLIC_DIR = "gwt-public";
+    
+    /**
+     * Default gwt modules directory
+     */
+    private static final String DEFAULT_MODULES_DIR = "gwt";
+    
     @Override
     public void onRoutesLoaded() {
-        boolean useDefault = findRoute()==null;
-        if (useDefault) {
-        	String staticDir = "staticDir" + 
-        		Play.configuration.getProperty("gwt2.publicpath", "gwt-public");
-        	Router.addRoute("GET", DEFAULT_PATH, staticDir);
-        }
         Router.addRoute("GET", "/@gwt", "dummy.dummy"); // protect it
-    }
-
-    private static Route findRoute(){
-        for (Route route : Router.routes) {
-            if (route.action.contains("gwt-public")) {
-                return route;
-            }
-        }
-        return null;
     }
 
 	@Override
@@ -53,7 +51,7 @@ public class GWT2Plugin extends PlayPlugin {
 				||StringUtils.isEmpty(service))
 			return null;
 		
-		String gwtpath = Play.configuration.getProperty("gwt2.modulespath", "gwt");
+		String gwtpath = modulesDir();
 		
 		GWT2Module mod = new GWT2Module();
 		mod.name = module.replace(" ", "").trim();
@@ -64,6 +62,48 @@ public class GWT2Plugin extends PlayPlugin {
 		
 		mod.service = Play.classloader.getClassIgnoreCase(sClass);
         
+		if (mod.service == null) {
+			// try to find with annotation
+	           for (Class<?> cservice : Play.classloader.getAnnotatedClasses(GWT2ServicePath.class)) {
+	                String path = ((GWT2ServicePath) cservice.getAnnotation(GWT2ServicePath.class)).value();
+	                if (("/"+module+"/"+service).equals(path)) {
+	                	mod.service = cservice;
+	                	break;
+	                }
+	            }
+		}		
+		
 		return mod;
+	}
+
+	/**
+	 * Get gwt public directory
+	 * @return
+	 */
+	public static String publicDir() {
+		return Play.configuration.getProperty("gwt2.publicdir", DEFAULT_PUBLIC_DIR);
+	}
+	
+	/**
+	 * Get gwt public url path
+	 * @return
+	 */
+	public static String publicPath() {
+		return Play.configuration.getProperty("gwt2.publicpath", DEFAULT_PATH);
+	}
+	
+	/**
+	 * Get gwt modules directory
+	 * @return
+	 */
+	public static String modulesDir() {
+		return Play.configuration.getProperty("gwt2.modulesdir", DEFAULT_MODULES_DIR);
+	}
+
+	static public class GWT2Module  {
+		public String name;
+		public String path;
+		
+		public Class<?> service;
 	}
 }

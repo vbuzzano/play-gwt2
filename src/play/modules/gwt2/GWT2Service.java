@@ -2,13 +2,18 @@ package play.modules.gwt2;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.Future;
 
-import play.Logger;
 import play.Play;
 import play.data.validation.Validation;
 import play.exceptions.UnexpectedException;
+import play.modules.gwt2.chain.GWT2Chain;
+import play.modules.gwt2.chain.GWT2ChainAsync;
+import play.modules.gwt2.chain.GWT2ChainSync;
 import play.mvc.Http.Request;
 import play.mvc.Http.Response;
 import play.mvc.Router;
@@ -67,9 +72,17 @@ public class GWT2Service implements SerializationPolicyProvider {
 	protected Request request;
 	protected Response response;
 	protected Session session;
-	
+	protected RPCRequest rpcRequest;
 	protected String payload;
 	
+	public RPCRequest getRpcRequest() {
+		return rpcRequest;
+	}
+
+	public void setRpcRequest(RPCRequest rpcRequest) {
+		this.rpcRequest = rpcRequest;
+	}
+
 	public void setRequest(Request request) {
 		this.request = request;
 	}
@@ -85,10 +98,6 @@ public class GWT2Service implements SerializationPolicyProvider {
 	public void setPlayLoad(String pl) {
 		payload = pl;
 	}
-	
-    public final SerializationPolicy getSerializationPolicy(String moduleBaseURL, String strongName) {
-        return doGetSerializationPolicy(moduleBaseURL, strongName);
-    }
 
     /**
      * 
@@ -147,27 +156,54 @@ public class GWT2Service implements SerializationPolicyProvider {
         }
         return serializationPolicy;
     }
+    
+    public final SerializationPolicy getSerializationPolicy(String moduleBaseURL, String strongName) {
+        return doGetSerializationPolicy(moduleBaseURL, strongName);
+    }
 
     /**
      * Invoke the service
+     * return the result to encode
      * @return
+     * @throws InvocationTargetException 
+     * @throws IllegalAccessException 
+     * @throws IllegalArgumentException 
      */
-    public String invoke() {
+    public Object invoke() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         try {
             Thread.currentThread().setContextClassLoader(Play.classloader);
-            RPCRequest rpcRequest = RPC.decodeRequest(payload, this.getClass(), this);
-            return RPC.invokeAndEncodeResponse(this, rpcRequest.getMethod(), rpcRequest.getParameters(), rpcRequest.getSerializationPolicy());
-        } catch (Exception ex) {
-            Logger.error(ex, "An IncompatibleRemoteServiceException was thrown while processing this call.");
-            try {
-                return RPC.encodeResponseForFailure(null, ex);
-            } catch (Exception exx) {
-                exx.printStackTrace();
-                return null;
-            }
+//            rpcRequest = RPC.decodeRequest(payload, this.getClass(), this);
+
+            Method serviceMethod = getServiceMethod();
+            if (serviceMethod == null)
+            	throw new NullPointerException("serviceMethod");
+
+            SerializationPolicy serializationPolicy = getSerializationPolicy();
+            if (serializationPolicy == null)
+            	throw new NullPointerException("serializationPolicy");
+
+            // invoke
+            return serviceMethod.invoke(this, rpcRequest.getParameters());
         } finally {
             Thread.currentThread().setContextClassLoader(cl);
         }
     }
+
+    protected SerializationPolicy getSerializationPolicy() {
+    	return rpcRequest.getSerializationPolicy();
+    }
+
+	protected Method getServiceMethod() {
+    	return rpcRequest.getMethod();
+    }
+
+	protected static Object chainASync(Future future, GWT2Chain chain) {
+    	throw new GWT2ChainAsync(future, chain);
+    }
+
+    protected static Object chain(Future future, GWT2Chain chain) {
+    	throw new GWT2ChainSync(future, chain);
+    }
+
 }

@@ -6,14 +6,20 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * Define if a gwt2 service must be run async
+ * If yes you won't be able to use GWT2Chain
  * 
- * @author Vincent Buzzano <vincent.buzzano2g
+ * @author Vincent Buzzano <vincent.buzzano@gmail.com>
  *
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface GWT2ServicePath {
+public @interface GWT2ServiceAsync {
 
-    public String value();
+	/**
+	 * True or false
+	 * @return
+	 */
+    public boolean value() default true;
     
 }

@@ -1,7 +1,7 @@
 GWT2 Plugin for Play!
 by Vincent Buzzano
 
-Current version is 1.5 for play 1.2
+Current version is 1.6 for play 1.2
 Project Webstie: http://github.com/vbuzzano/play-gwt2
 
 This module has been tested with gwt 2.2.0.
@@ -15,7 +15,7 @@ Edit <myApp>/conf/dependencies.yml files, and add gwt2 module:
 ~# Application dependencies
 ~require:
 ~    - play
-~    - play -> gwt2 1.5
+~    - play -> gwt2 1.6
 
 Skip the next command if you want to install the module directly in the "modules" folder of your application. Otherwise the module will be installed in play! framework.
 > play install gwt2
@@ -32,7 +32,7 @@ if you want, you can remove it and add gwt-user to your conf/dependencies.yml
 ~# Application dependencies
 ~require:
 ~    - play
-~    - play -> gwt2 1.5
+~    - play -> gwt2 1.6
 ~    - com.google -> gwt-user 2.2.0
 then run "play deps" again
 
@@ -53,6 +53,13 @@ This will display GWT2 Plugin for Play! commands help.
 
 HISTORY
 --------------------------------------
+1.6 ASync improvement
+     - Add GWT2SercieAsync annotation to define if a GWT2Service need to be invoked asyncron as aJob
+     - Add GWT2Chain concept to enable no async service to run Promise/Future/Job async with a callback
+       With this you can start as many future as you want without blocking the service thread
+     - Add new Async Sample
+	 - Improve errors handling
+     - some bug fixes
 1.5 Big Update
 	 - update documentation
      - fix 500 error problem with 1.2 and new application

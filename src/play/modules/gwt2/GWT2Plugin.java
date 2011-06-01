@@ -5,6 +5,7 @@ import org.apache.commons.lang.StringUtils;
 
 import play.Play;
 import play.PlayPlugin;
+import play.classloading.ApplicationClasses.ApplicationClass;
 import play.mvc.Http.Request;
 import play.mvc.Router;
 import play.mvc.results.RedirectToStatic;
@@ -76,7 +77,13 @@ public class GWT2Plugin extends PlayPlugin {
 		return mod;
 	}
 
-	/**
+    public void enhance(ApplicationClass applicationClass) throws Exception {
+    	GWT2Enhancer enhancer = new GWT2Enhancer();
+    	System.out.println("ok");
+    	enhancer.enhanceThisClass(applicationClass);
+    }
+	
+    /**
 	 * Get gwt public directory
 	 * @return
 	 */

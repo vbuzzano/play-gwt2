@@ -8,7 +8,7 @@ import play.modules.gwt2.GWT2ServicePath;
 
 
 import com.google.gwt.user.server.rpc.*;
- 
+
 public class Greeting extends GWT2Service implements GreetingService {
  
     public String greetServer(String name) {

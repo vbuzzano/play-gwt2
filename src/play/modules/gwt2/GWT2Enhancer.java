@@ -1,66 +1,35 @@
+/*
+ * Copyright 2011 Vincent Buzzano
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+*/
 package play.modules.gwt2;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javassist.CannotCompileException;
-import javassist.CtClass;
-import javassist.CtMethod;
-import javassist.expr.ExprEditor;
-import javassist.expr.MethodCall;
-
-import org.apache.commons.javaflow.bytecode.transformation.asm.AsmClassTransformer;
-
 import play.classloading.ApplicationClasses.ApplicationClass;
-import play.classloading.enhancers.ControllersEnhancer;
 import play.classloading.enhancers.Enhancer;
 
+/**
+ * GWT2Enhancer
+ * 
+ * not used yet
+ * 
+ * @author Vincent Buzzano <vincent.buzzano@gmail.com>
+ */
 public class GWT2Enhancer extends Enhancer {
-
-    static final List<String> continuationMethods = new ArrayList<String>();
-    static {
-        continuationMethods.add("play.modules.gwt2.GWT2Service.await(java.util.concurrent.Future,play.mvc.Http$Request)");
-    }
 
     @Override
     public void enhanceThisClass(ApplicationClass applicationClass) throws Exception {
-    	if (1==1)
-    		return;
-        CtClass ctClass = makeClass(applicationClass);
-       
-        if (!ctClass.subtypeOf(classPool.get(GWT2Service.class.getName()))) {
-            return;
-        }
-
-        final boolean[] needsContinuations = new boolean[] {false};
-        for(CtMethod m : ctClass.getDeclaredMethods()) {
-            m.instrument(new ExprEditor() {
-
-                @Override
-                public void edit(MethodCall m) throws CannotCompileException {
-                    try {
-                        if(continuationMethods.contains(m.getMethod().getLongName())) {
-                            needsContinuations[0] = true;
-                        }
-                    } catch(Exception e) {                        
-                    }
-                }
-
-            });
-
-            if(needsContinuations[0]) {
-                break;
-            }
-        }
-
-        if(!needsContinuations[0]) {
-            return;
-        }
-
-        // Apply continuations
-        applicationClass.enhancedByteCode = new AsmClassTransformer().transform(applicationClass.enhancedByteCode);
-
-        ctClass.defrost();
+    	return;
     }
 
 }

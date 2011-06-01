@@ -31,7 +31,6 @@ import play.mvc.results.RedirectToStatic;
  * Main GWT2 Plugin Class
  * 
  * @author Vincent Buzzano <vincent.buzzano@gmail.com>
- * based on the GWT Plugin by **Rustem Suniev**.
  */
 public class GWT2Plugin extends PlayPlugin {
 

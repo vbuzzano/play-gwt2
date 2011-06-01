@@ -78,9 +78,8 @@ public class GWT2Plugin extends PlayPlugin {
 	}
 
     public void enhance(ApplicationClass applicationClass) throws Exception {
-    	GWT2Enhancer enhancer = new GWT2Enhancer();
-    	System.out.println("ok");
-    	enhancer.enhanceThisClass(applicationClass);
+//    	GWT2Enhancer enhancer = new GWT2Enhancer();
+//    	enhancer.enhanceThisClass(applicationClass);
     }
 	
     /**

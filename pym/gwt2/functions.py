@@ -75,10 +75,11 @@ def compile(args, modulename):
 		for f in os.listdir(path):
 			if f.startswith("hibernate-jpa"):
 				cp.append(f)
+		cp.append(os.path.normpath(os.path.join(gwt_path, 'gwt-dev.jar')))
+		cp.append(os.path.normpath(os.path.join(application_path, 'lib/gwt-user.jar')))
+		cp.append(os.path.normpath(os.path.join(gwt2_module_dir, 'app')))
 		cp.append(os.path.normpath(os.path.join(gwt2_module_dir, 'hack')))
 		cp.append(os.path.normpath(os.path.join(application_path, 'app')))
-		cp.append(os.path.normpath(os.path.join(application_path, 'lib/gwt-user.jar')))
-		cp.append(os.path.normpath(os.path.join(gwt_path, 'gwt-dev.jar')))
 		for jar in os.listdir(os.path.join(application_path, 'lib')):
 			if jar.endswith('.jar'):
 				cp.append(os.path.normpath(os.path.join(application_path, 'lib/%s' % jar)))

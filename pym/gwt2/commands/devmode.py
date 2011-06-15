@@ -30,10 +30,11 @@ def execute(args):
 	print "~ Running com.google.gwt.dev.DevMode ..."
 	
 	cp = []
-	cp.append(os.path.normpath(os.path.join(application_path, 'app')))
-	cp.append(os.path.normpath(os.path.join(gwt2_module_dir, 'hack')))
-	cp.append(os.path.normpath(os.path.join(application_path, 'lib/gwt-user.jar')))
 	cp.append(os.path.normpath(os.path.join(gwt_path, 'gwt-dev.jar')))
+	cp.append(os.path.normpath(os.path.join(application_path, 'lib/gwt-user.jar')))
+	cp.append(os.path.normpath(os.path.join(gwt2_module_dir, 'app')))
+	cp.append(os.path.normpath(os.path.join(gwt2_module_dir, 'hack')))
+	cp.append(os.path.normpath(os.path.join(application_path, 'app')))
 	
 	# get gwt module
 	modulename = []

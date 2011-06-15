@@ -53,6 +53,9 @@ This will display GWT2 Plugin for Play! commands help.
 
 HISTORY
 --------------------------------------
+1.7  - Add gwt2chat sample. This the Chat Sample from Play! 1.2 but GWT. 3 modules. refresh, long polling and websocket	
+     - Add GWT2WSClient, a simple client to use with Play! Websocket.
+     - Add gwt.codesvr to url when in dev mode. Only for GET request. the plugin redirect the request with gwt.codesvr argument. 
 1.6 ASync improvement
      - Add GWT2SercieAsync annotation to define if a GWT2Service need to be invoked asyncron as aJob
      - Add GWT2Chain concept to enable no async service to run Promise/Future/Job async with a callback

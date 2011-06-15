@@ -1,3 +1,18 @@
+/*
+ * Copyright 2011 Vincent Buzzano
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package play.modules.gwt2;
 
 import java.io.IOException;
@@ -21,7 +36,6 @@ import play.mvc.Router.Route;
 import play.mvc.Scope.Session;
 import play.mvc.results.RenderStatic;
 
-import com.google.gwt.user.server.rpc.RPC;
 import com.google.gwt.user.server.rpc.RPCRequest;
 import com.google.gwt.user.server.rpc.SerializationPolicy;
 import com.google.gwt.user.server.rpc.SerializationPolicyLoader;
@@ -60,6 +74,16 @@ import com.google.gwt.user.server.rpc.SerializationPolicyProvider;
  *         return "Hello " + name;
  *     }
  * }
+ * 
+ * or without GWT2ServicePath, just name your service class with the name in RemoteServiceRelativePath 
+ * 
+ * public class Hello extends GWTService implements HelloService {
+ *     public String sayHello(String name) {
+ *         return "Hello " + name;
+ *     }
+ * }
+ * 
+ * You Can use annotation @GWT2ServiceAsync to enable a service to be runned async using Play Job
  * 
  * This is the only difference from the GWT documentation.
  * 
@@ -173,7 +197,6 @@ public class GWT2Service implements SerializationPolicyProvider {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         try {
             Thread.currentThread().setContextClassLoader(Play.classloader);
-//            rpcRequest = RPC.decodeRequest(payload, this.getClass(), this);
 
             Method serviceMethod = getServiceMethod();
             if (serviceMethod == null)
@@ -198,11 +221,11 @@ public class GWT2Service implements SerializationPolicyProvider {
     	return rpcRequest.getMethod();
     }
 
-	protected static Object chainASync(Future future, GWT2Chain chain) {
+	protected static Object chainASync(Future<?> future, GWT2Chain<Object> chain) {
     	throw new GWT2ChainAsync(future, chain);
     }
 
-    protected static Object chain(Future future, GWT2Chain chain) {
+	protected static Object chain(Future<?> future, GWT2Chain<Object> chain) {
     	throw new GWT2ChainSync(future, chain);
     }
 

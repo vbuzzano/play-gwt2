@@ -1,13 +1,17 @@
 package play.modules.gwt2;
 
 
+import java.lang.reflect.Method;
+
 import org.apache.commons.lang.StringUtils;
 
 import play.Play;
 import play.PlayPlugin;
 import play.classloading.ApplicationClasses.ApplicationClass;
+import play.mvc.Controller;
 import play.mvc.Http.Request;
 import play.mvc.Router;
+import play.mvc.results.Redirect;
 import play.mvc.results.RedirectToStatic;
 
 /**
@@ -39,14 +43,30 @@ public class GWT2Plugin extends PlayPlugin {
     public void onRoutesLoaded() {
         Router.addRoute("GET", "/@gwt", "dummy.dummy"); // protect it
     }
+    
+    public void beforeActionInvocation(Method actionMethod) {
 
-	@Override
-    public void routeRequest(Request request) {
-        if (request.path.equals("/@gwt")) {
+    	if (Request.current().path.equals("/@gwt")) {
             throw new RedirectToStatic(Router.reverse(Play.getVirtualFile("/gwt-public/index.html")));
         }
-    }
 
+    	if (Play.mode.isDev() 
+    			&& !Request.current().method.equals("POST")
+    			&& !Request.current().method.equals("WS")
+    			&& !Request.current().isAjax()) 
+    	{
+    		String url = Request.current().url;
+        	if (!url.contains("gwt.codesvr")) {
+        		if (url.indexOf("?") < 0) {
+        			url += "?gwt.codesvr=127.0.0.1:9997";
+        		} else {
+        			url += "&gwt.codesvr=127.0.0.1:9997";
+        		}
+        		throw new Redirect(url);
+        	}
+        }
+    }
+	
 	public static GWT2Module getModule(String module, String service) {
 		if (StringUtils.isEmpty(module) 
 				||StringUtils.isEmpty(service))

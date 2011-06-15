@@ -1,0 +1,13 @@
+#{extends 'main.html' /}
+#{set title:'Basic Chat room' /}
+
+<script>
+var appInit = {
+	'user': '${user}'
+};
+</script>
+
+#{gwt2.module 'refresh'/}
+<h1>GWT RPC, using active refresh — You are now chatting as ${user} <a href="@{leave(user)}">Leave the chat room</a></h1> 
+
+<div id="chat" username="${user}"/>

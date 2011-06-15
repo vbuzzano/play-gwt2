@@ -1,0 +1,14 @@
+#{extends 'main.html' /}
+#{set title:'Basic Chat room' /}
+
+<script>
+var appInit = {
+	'user': '${user}',
+	'ws': '@@{WebSocket.ChatRoomSocket.join(user)}'
+};
+</script>
+
+#{gwt2.module 'websocket'/}
+<h1>GWT, using websocket — You are now chatting as ${user} <a href="@{Application.index()}">Leave the chat room</a></h1> 
+<div style="color:red">tested on Chrome and Chromium. Will not work on Firefox 4 or others browsers which not support websocket or disable it.</div> 
+<div id="chat" username="${user}"/>

@@ -1,0 +1,13 @@
+#{extends 'main.html' /}
+#{set title:'Chat room' /}
+
+<h1>GWT RPC, long polling — You are now chatting as ${user} <a href="@{leave(user)}">Leave the chat room</a></h1> 
+<script>
+var appInit = {
+	'user': '${user}'
+};
+</script>
+
+#{gwt2.module 'longPolling'/}
+
+<div id="chat" username="${user}"/>

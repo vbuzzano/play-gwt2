@@ -1,4 +1,4 @@
- file defines all module routes (Higher priority routes first)
+# file defines all module routes (Higher priority routes first)
 #
 # import these routes in the main app as :
 # *     /                       module:gwt2

@@ -57,14 +57,16 @@ public class GWT2Controller extends Controller {
 		if (mod == null)
 			notFound("module not found !");
 
+		if (mod.service == null)
+			throw new NullArgumentException("module.service is null");
+		
+
         // create service instance
     	GWT2Service gwtService;
 		try {
 			gwtService = (GWT2Service) mod.service.newInstance();
 
-			if (mod.service == null)
-	    		throw new NullArgumentException("module.service is null");
-	    	
+			
 	        if (!GWT2Service.class.isAssignableFrom(mod.service))
 	        	throw new Exception("module.service is not GWT2Service instance");
 

@@ -1,10 +1,10 @@
-h1. <a>Play GWT2 Module Version 1.6</a>
+h1. <a>Play GWT2 Module Version 1.7</a>
 
-p.  Play GWT2 1.6 provides some classes and commands to simplify the integration of a GWT 2.2.0 Module in a play application. 
+p.  Play GWT2 1.7 provides some classes and commands to simplify the integration of a GWT 2.2.0 Module in a play application. 
  
-This module has been tested with play 1.2 and gwt 2.2.0
+This module has been tested with play 1.2 and gwt 2.2.x and 2.3
 
-p. In the version 1.6
+p. In the version 1.7
  * Add GWT2SercieAsync annotation to define if a GWT2Service need to be invoked asyncron as aJob
  * Add GWT2Chain concept to enable no async service to run Promise/Future/Job async with a callback With this you can start as many future as you want without blocking the service thread
  * Add new Async Sample
@@ -32,7 +32,7 @@ p. 5. Edit <myApp>/conf/dependencies.yml files, and add gwt2 module:
 bc. ~# Application dependencies
 ~require:
 ~    - play
-~    - play -> gwt2 1.6
+~    - play -> gwt2 1.7
 
 p. 6. Install GWT2 module.
 
@@ -81,8 +81,8 @@ if you want to manage the gwt-user.jar with play dependencies, add gwt-user to y
 bc. ~# Application dependencies
 ~require:
 ~    - play
-~    - play -> gwt2 1.6
-~    - com.google -> gwt-user 2.2.0
+~    - play -> gwt2 1.7
+~    - com.google -> gwt-user 2.3
 
 Remove lib/gwt-user.jar
 
@@ -103,9 +103,7 @@ h2. <a>Create a GWT Module</a>
  
 create your module like this:
 
-bc. play gwt2:create myApp
-
-p. note: myApp is not the name of the gwt2 module, but the name of your application. If you are already into the application folder juste use : play gwt2:create
+bc. play gwt2:create
 
 p. this will ask you a gwt module name 
 
@@ -139,11 +137,11 @@ h2. <a>Testing you GWT Module with dev mode</a>
 
 First start you Play application.
 
-bc. play run myApp
+bc. play run
 
 Then start the dev mode, 
 
-bc. play gwt2:devmode myApp
+bc. play gwt2:devmode
 
 p.  GWT will compile your modules at first time.
 
@@ -153,7 +151,7 @@ h2. <a>Compiling a module</a>
 
 To compile a module (eg: before deployment)
 
-bc. play gwt2:compile myApp
+bc. play gwt2:compile
 
 p. this will ask you a gwt module name 
 
@@ -166,7 +164,7 @@ h2. <a>Remove a GWT Module</a>
 
 p. As for creating a new GWT Module but use gwt2:remove 
 
-bc. play gwt2:remove myApp
+bc. play gwt2:remove
 
 p. this will ask you a gwt module name 
 
@@ -303,7 +301,8 @@ d. run> play run
 
 h2. <a>About</a>
 
-This Module is maintained by **Vincent Buzzano** and was originaly based on the GWT Plugin by Rustem Suniev.
+This Module is maintained by **Vincent Buzzano**
 
 website:
  - http://github.com/vbuzzano/play-gwt2
+

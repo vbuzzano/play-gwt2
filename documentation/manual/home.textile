@@ -105,6 +105,8 @@ create your module like this:
 
 bc. play gwt2:create myApp
 
+p. note: myApp is not the name of the gwt2 module, but the name of your application. If you are already into the application folder juste use : play gwt2:create
+
 p. this will ask you a gwt module name 
 
 bc. What is the gwt module name ?

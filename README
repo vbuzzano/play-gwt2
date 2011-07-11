@@ -15,16 +15,16 @@ Edit <myApp>/conf/dependencies.yml files, and add gwt2 module:
 ~# Application dependencies
 ~require:
 ~    - play
-~    - play -> gwt2 1.6
+~    - play -> gwt2 1.7
 
 Skip the next command if you want to install the module directly in the "modules" folder of your application. Otherwise the module will be installed in play! framework.
 > play install gwt2
 
 To add gwt2 module to your application, play dependencies management
-> play deps <myApp>
+> play deps
 
 Then init your porject with:
-> play gwt2:init <myApp>
+> play gwt2:init
 
 During initialisation, gwt2 module will copy gwt-user.jar in your application lib folder.
 
@@ -32,7 +32,7 @@ if you want, you can remove it and add gwt-user to your conf/dependencies.yml
 ~# Application dependencies
 ~require:
 ~    - play
-~    - play -> gwt2 1.6
+~    - play -> gwt2 1.7
 ~    - com.google -> gwt-user 2.2.0
 then run "play deps" again
 
@@ -40,14 +40,14 @@ After init create you first gwt module:
 > play gwt2:create <myApp>
 
 And test it:
-> play gwt2:devmode <myApp>
+> play gwt2:devmode
 
 
 PLAY SHELL COMMANDS:
 --------------------------------------
 For alist of commands, execute 
 
-> play gwt2:help <myApp>
+> play gwt2:help
 
 This will display GWT2 Plugin for Play! commands help.
 

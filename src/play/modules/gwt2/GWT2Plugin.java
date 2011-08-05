@@ -16,7 +16,9 @@
 package play.modules.gwt2;
 
 
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.Socket;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -66,7 +68,8 @@ public class GWT2Plugin extends PlayPlugin {
     	if (Play.mode.isDev() 
     			&& !Request.current().method.equals("POST")
     			&& !Request.current().method.equals("WS")
-    			&& !Request.current().isAjax()) 
+    			&& !Request.current().isAjax()
+    			&& isGWTDevMode()) 
     	{
     		String url = Request.current().url;
         	if (!url.contains("gwt.codesvr")) {
@@ -115,6 +118,17 @@ public class GWT2Plugin extends PlayPlugin {
 //    	enhancer.enhanceThisClass(applicationClass);
     }
 	
+    private static boolean isGWTDevMode() {  
+    	try {
+    		Socket port = new Socket("127.0.0.1", 9997);  
+    		port.close();  
+    		port = null;  
+    		return true;  
+    	} catch (IOException e) {  
+    		return false;  
+    	}  
+    }  
+    
     /**
 	 * Get gwt public directory
 	 * @return

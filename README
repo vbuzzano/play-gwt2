@@ -4,7 +4,7 @@ by Vincent Buzzano
 Current version is 1.6 for play 1.2
 Project Webstie: http://github.com/vbuzzano/play-gwt2
 
-This module has been tested with gwt 2.2.0.
+This module has been tested with gwt 2.2.x and 2.3.0
 
 QUICK START
 -------------------------------------
@@ -33,7 +33,8 @@ if you want, you can remove it and add gwt-user to your conf/dependencies.yml
 ~require:
 ~    - play
 ~    - play -> gwt2 1.7
-~    - com.google -> gwt-user 2.2.0
+~    - com.google -> gwt-user 2.3.0
+
 then run "play deps" again
 
 After init create you first gwt module:

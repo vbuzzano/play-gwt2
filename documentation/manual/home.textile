@@ -2,7 +2,7 @@ h1. <a>Play GWT2 Module Version 1.7</a>
 
 p.  Play GWT2 1.7 provides some classes and commands to simplify the integration of a GWT 2.2.0 Module in a play application. 
  
-This module has been tested with play 1.2 and gwt 2.2.x and 2.3
+This module has been tested with play 1.2 and gwt 2.2.x and 2.3.0
 
 p. In the version 1.7
  * Add GWT2SercieAsync annotation to define if a GWT2Service need to be invoked asyncron as aJob
@@ -82,7 +82,7 @@ bc. ~# Application dependencies
 ~require:
 ~    - play
 ~    - play -> gwt2 1.7
-~    - com.google -> gwt-user 2.3
+~    - com.google -> gwt-user 2.3.0
 
 Remove lib/gwt-user.jar
 

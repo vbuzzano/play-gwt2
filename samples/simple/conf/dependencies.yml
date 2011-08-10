@@ -3,5 +3,5 @@
 require:
     - play
     - play -> gwt2 1.7
-    - com.google.gwt -> gwt-user 2.2.0
+    - com.google.gwt -> gwt-user 2.3.0
 

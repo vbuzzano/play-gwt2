@@ -1,59 +1,50 @@
 GWT2 Plugin for Play!
 by Vincent Buzzano
 
-Current version is 1.6 for play 1.2
+Current version is 1.8 for play 1.2.3
 Project Webstie: http://github.com/vbuzzano/play-gwt2
 
 This module has been tested with gwt 2.2.x and 2.3.0
 
 QUICK START
 -------------------------------------
-First of all, set the path of your gwt home
-> export $GWT_HOME=<path to gwt folder>
 
-Edit <myApp>/conf/dependencies.yml files, and add gwt2 module:
-~# Application dependencies
-~require:
-~    - play
-~    - play -> gwt2 1.7
+Create a new application --with gwt2
+> play new myGwt2App --with gwt2
 
-Skip the next command if you want to install the module directly in the "modules" folder of your application. Otherwise the module will be installed in play! framework.
-> play install gwt2
+then 
+> cd myGwt2App
 
-To add gwt2 module to your application, play dependencies management
-> play deps
+That's all .. you are ok to start your project !!
 
-Then init your porject with:
-> play gwt2:init
 
-During initialisation, gwt2 module will copy gwt-user.jar in your application lib folder.
+Test your application. Open 2 terminal:
+- in the first terminal run
+> play run
 
-if you want, you can remove it and add gwt-user to your conf/dependencies.yml
-~# Application dependencies
-~require:
-~    - play
-~    - play -> gwt2 1.7
-~    - com.google -> gwt-user 2.3.0
-
-then run "play deps" again
-
-After init create you first gwt module:
-> play gwt2:create <myApp>
-
-And test it:
+- in the second terminal run
 > play gwt2:devmode
+
+if you want to add gwt modules to your projects use
+> play gwt2:create
 
 
 PLAY SHELL COMMANDS:
 --------------------------------------
 For alist of commands, execute 
 
+> play gwt2:
+or 
 > play gwt2:help
 
 This will display GWT2 Plugin for Play! commands help.
 
 HISTORY
 --------------------------------------
+1.8  - Rewrite play shell commands. 
+     - add create new project --with gwt2. 
+     - add Security lib (example will come in next version)
+     - fix lot of small bug.
 1.7  - Add gwt2chat sample. This the Chat Sample from Play! 1.2 but GWT. 3 modules. refresh, long polling and websocket	
      - Add GWT2WSClient, a simple client to use with Play! Websocket.
      - Add gwt.codesvr to url when in dev mode. Only for GET request. the plugin redirect the request with gwt.codesvr argument. 

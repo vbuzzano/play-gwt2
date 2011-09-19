@@ -1,6 +1,4 @@
-self: play -> gwt2 1.7
+self: play -> gwt2 1.8
 
 require:
     - play
-
-

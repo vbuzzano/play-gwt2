@@ -21,7 +21,14 @@ def execute(args):
 	public_dir = args.get("public_dir")
 	modules_dir = args.get("modules_dir")
 	gwt_path = args.get("gwt_path")
+
+	# app clean
+	pathmodule = os.path.join(application_path, public_dir, 'app') 
+	if os.path.exists(pathmodule):		
+		shutil.rmtree(pathmodule)
+		print "~ app (Application module) has been cleaned."
 	
+	# modules cleans	
 	path = os.path.join(application_path, modules_dir)
 	for dir in os.listdir(path):
 		file = os.path.join(path, dir, dir.capitalize()+'.gwt.xml')
@@ -32,3 +39,6 @@ def execute(args):
 			print "~ " + dir + " has been cleaned."
 	
 	print "~"
+	print "~ done"
+	print "~"
+

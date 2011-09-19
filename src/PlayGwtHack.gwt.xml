@@ -3,5 +3,4 @@
 <module rename-to="playgwthack">
 	<inherits name="com.google.gwt.user.User" />
 	<inherits name='com.google.gwt.user.theme.standard.Standard' />
-	<source path='play'/>
 </module>	

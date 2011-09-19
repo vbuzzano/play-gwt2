@@ -83,10 +83,12 @@ bc. ~# Application dependencies
 ~    - play
 ~    - play -> gwt2 1.7
 ~    - com.google -> gwt-user 2.3.0
+~    - com.google -> gwt-dev 2.3.0
 
-Remove lib/gwt-user.jar
+Remove lib/gwt-user.jar and lib/gwt-dev.jar
 
 bc. > rm lib/gwt-user.jar
+ > rm lib/gwt-dev.jar
 
 then run "play deps" again
 

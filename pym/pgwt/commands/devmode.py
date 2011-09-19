@@ -17,6 +17,7 @@ def getHelp():
 
 def execute(args):
 	app = args.get("app")
+	env = args.get("env")
 	application_path = args.get("app").path
 	gwt2_module_dir = args.get("gwt2_module_dir")
 	modules_dir = args.get("modules_dir")
@@ -30,34 +31,61 @@ def execute(args):
 	print "~ Running com.google.gwt.dev.DevMode ..."
 	
 	cp = []
-	cp.append(os.path.normpath(os.path.join(gwt_path, 'gwt-dev.jar')))
-	cp.append(os.path.normpath(os.path.join(application_path, 'lib/gwt-user.jar')))
+	
+	#Add Jpa Hibernate at first posision to fix compilation problem
+	path = os.path.normpath(os.path.join(env["basedir"], "framework", "lib"))	
+	for f in os.listdir(path):
+		if f.startswith("hibernate-jpa"):
+			cp.append(f)
+	
+	#Add GWT libs
+	path = os.path.normpath(os.path.join(env["basedir"], "framework", "lib"))	
+	for f in os.listdir(path):
+		if f.startswith("gwt-user"):
+			cp.append(f)
+		if f.startswith("gwt-dev"):
+			cp.append(f)
+	
+	#Add Play GWT2 plugin app & hack src
 	cp.append(os.path.normpath(os.path.join(gwt2_module_dir, 'app')))
 	cp.append(os.path.normpath(os.path.join(gwt2_module_dir, 'hack')))
+	
+	#Add Application path & libs
 	cp.append(os.path.normpath(os.path.join(application_path, 'app')))
+	for jar in os.listdir(os.path.join(application_path, 'lib')):
+		if jar.endswith('.jar'):
+			cp.append(os.path.normpath(os.path.join(application_path, 'lib/%s' % jar)))
+	
+	#Compute cp
+	#windows		
+	if os.name == 'nt':
+		cps = ';'.join(cp)
+		cps = cps + ';' + app.cp_args()
+	#linux
+	else:
+		cps = ':'.join(cp)
+		cps = cps + ':' + app.cp_args()
 	
 	# get gwt module
 	modulename = []
 	print "~ Loading modules : "
+	modulename.append('app')
 	for dir in os.listdir(os.path.join(application_path, modules_dir)):
 		if dir[0] != '.':
 			modulename.append(dir)
 			print " - " + dir
 	print "~"
 	
-	# append classpath
-	for jar in os.listdir(os.path.join(application_path, 'lib')):
-		if jar.endswith('.jar'):
-			cp.append(os.path.normpath(os.path.join(application_path, 'lib/%s' % jar)))
-	
-	# if windows
-	if os.name == 'nt':
-		cps = ';'.join(cp)
-		cps = cps + ';' + app.cp_args()	
+	# do we use automatic startup urls
+	startupUrls = []
+	if app.readConf('gwt2.devmode.url.auto') == True :
+		for modul in modulename:
+			startupUrls.append('http://localhost:' + app.readConf('http.port') + public_path + '/'+modul+'/index.html')
 	else:
-		cps = ':'.join(cp)
-		cps = cps + ':' + app.cp_args()
-	
+		for i in range(1, 100):
+			if app.readConf('gwt2.devmode.url.%d' %(i)) :
+				startupUrls.append('http://localhost:' + app.readConf('http.port') + app.readConf('gwt2.devmode.url.%d' %(i)))
+
 	# '-logLevel', 'DEBUG',
 	java_path = app.java_path()
 	gwt_cmd = [java_path, '-Xmx256M', '-classpath', cps, 'com.google.gwt.dev.DevMode', '-noserver', '-war', os.path.normpath(os.path.join(application_path, public_dir))]
@@ -69,10 +97,13 @@ def execute(args):
 
 	# append modules
 	for modul in modulename:
-		gwt_cmd.append(base_classpath+modul+'.'+modul.capitalize())
-	for modul in modulename:
+		if modul == 'app':
+			gwt_cmd.append(modul.capitalize())
+		else:
+			gwt_cmd.append(base_classpath+modul+'.'+modul.capitalize())
+	for url in startupUrls:
 		gwt_cmd.append('-startupUrl')
-		gwt_cmd.append('http://localhost:' + app.readConf('http.port') + '/' + public_path + '/'+modul+'/index.html')
+		gwt_cmd.append(url)
 	
 	# execute devmode
 	subprocess.call(gwt_cmd, env=os.environ)

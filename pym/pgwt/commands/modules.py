@@ -7,7 +7,7 @@
 #
 # @author Vincent Buzzano <vincent.buzzano@gmail.com>
 ###############################################################################
-from gwt2 import *
+from pgwt import *
 
 def getCommands():
 	return ["gwt2:modules", "gwt2:list"]
@@ -16,4 +16,4 @@ def getHelp():
 	return "List all GWT Modules"
 
 def execute(args):
-	functions.listModules(args)
+	functions.listModules(args, True)

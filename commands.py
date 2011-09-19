@@ -1,16 +1,17 @@
 ###############################################################################
-# GWT2 Plugin for Play! 1.1
+# GWT2 Plugin for Play! 1.2.2
 # by Vincent Buzzano <vincent.buzzano@gmail.com>
 ###############################################################################
 import getopt, sys, os, inspect
 global gwt2_module_dir, command_dir
 gwt2_module_dir = inspect.getfile(inspect.currentframe()).replace("commands.py","")
-command_dir = os.path.join(gwt2_module_dir, "pym", "gwt2", "commands")
-
+command_dir = os.path.join(gwt2_module_dir, "pym", "pgwt", "commands")
 sys.path.append(os.path.join(gwt2_module_dir, "pym"))
-from gwt2 import *
-from gwt2.commands import *
+
+from pgwt import *
+from pgwt.commands import *
 from play.utils import *
+from play.commands import deps
 
 ###############################################################################
 # Call a module command 
@@ -27,7 +28,6 @@ def callModuleCommand(args):
 			for item in cmd :
 				if item == command :
 					module = file[0:-3]
-	
 	if command != "" and module != None:
 		eval(module+'.execute(args)')
 
@@ -58,10 +58,12 @@ def execute(**kargs):
 		kargs['public_dir'] = 'gwt-public'
 
 	# get modules dir
-	modules_dir = app.readConf('gwt2.modulesdir')
-	if modules_dir == "":
-		modules_dir = 'gwt'
-
+	modules_dir = kargs.get("modules_dir")
+	if not modules_dir:
+		modules_dir = app.readConf('gwt2.modulesdir')
+		if modules_dir == "":
+			modules_dir = 'gwt'
+	
 	kargs['modules_base_classpath'] = modules_dir.replace(os.sep,".") + "."
 	
 	kargs['modules_dir'] = os.path.join('app', modules_dir)
@@ -70,7 +72,7 @@ def execute(**kargs):
 	kargs['gwt2_module_dir'] = gwt2_module_dir
 	
 	# Check options
-	gwt_path = None
+	gwt_path = "notset"
 	try:
 		optlist, args = getopt.getopt(play_remaining_args, '', ['gwt='])
 		for o, a in optlist:
@@ -88,24 +90,64 @@ def execute(**kargs):
 	if not gwt_path and os.environ.has_key('GWT_HOME'):
 		gwt_path = os.path.normpath(os.path.abspath(os.environ['GWT_HOME']))
 	
-	# if nothing has been found. stop
-	if not gwt_path:
-		print "~ Error: You need to specify the path of you GWT installation, "
-		print "~ either using the $GWT_PATH or $GWT_HOME environment variable or with the --gwt option" 
-		print "~ "
-		sys.exit(-1)
-	
-	# check for minimum library
-	if not os.path.exists(os.path.join(gwt_path, 'gwt-user.jar')) or not os.path.exists(os.path.join(gwt_path, 'gwt-dev.jar')):
-		print "~ Error: %s is not a valid GWT installation (checked for gwt-user.jar and gwt-dev.jar)" % gwt_path
-		print "~ This module has been tested with GWT 2.0.3"
-		print "~ "
-		sys.exit(-1)
-	
-	kargs['gwt_path'] = gwt_path
+	if gwt_path != "notset":
+		kargs['gwt_path'] = gwt_path
 	
 	# execute command
 	callModuleCommand(kargs)
+
+###############################################################################
+# After Commands 
+###############################################################################
+def after(**kargs):
+	command = kargs.get("command")
+	app = kargs.get("app")
+	args = kargs.get("args")
+	env = kargs.get("env")
+	modules_dir = "modules"
+	
+	# ~~~~~~~~~~~~~~~~~~~~~~ new
+	if command == 'new':
+		# add google dependencies		
+		depspath = os.path.join(app.path, 'conf/dependencies.yml')
+		depsfile = open(depspath,"a")
+		depsfile.write('\n    - com.google.gwt -> gwt-user 2.3.0\n')
+		depsfile.write('    - com.google.gwt -> gwt-dev 2.3.0\n')
+		depsfile.close()
+		
+		# Add gwt2 configuration
+		confpath = os.path.join(app.path, 'conf/application.conf')
+		conffile = open(confpath,"a")
+		conffile.write('\n# GWT module dir\n# ~~~~~\n# use to define the directory where modules will be store\ngwt2.modulesdir=' + modules_dir + '\n')
+		conffile.write('\n# GWT public dir\n# ~~~~~\n# use to define where gwt will compile and expose modules\ngwt2.publicdir=gwt-public/modules\n')
+		conffile.write('\n# GWT public path\n# ~~~~~\n# base name for route.\n# gwt2.publicpath=/app\n')
+		conffile.write('\n# GWT devmode startupUrls\n# gwt2.devmode.url.auto=true\ngwt2.devmode.url.1=/\n')
+
+		conffile.close()
+				
+		# execute play dependencies
+	        deps.execute(command='dependencies', app=app, args=['--sync'], env=env, cmdloader=None)
+		
+		# init
+		execute(command="gwt2:init", app=app, modules_dir=modules_dir, args=[], env=env)
+		
+		# add module to application routes
+		file = os.path.join(app.path, 'conf', "routes")
+		replaceAll(file, '# Ignore favicon requests', '# Play! GWT2 Modules\n*       /                                       module:gwt2\n\n# Ignore favicon requests')
+		
+		# update gwt application xml
+		file = os.path.join(app.path, 'app', 'App.gwt.xml')
+		replaceAll(file, '    <!-- Specify the app entry point class.                         -->', '    <!-- Specify the app entry point class.                         -->\n    <entry-point class="client.Application"/>')
+		replaceAll(file, "<source path='shared'/>", "<source path='client'/>\n    <source path='hared'/>")
+		
+		# remove javascripts
+		if os.path.exists(os.path.join(app.path, 'public', 'javascripts')):
+			shutil.rmtree(os.path.join(app.path, 'public', 'javascripts'))
+		
+		# replace favicon
+		os.remove(os.path.join(app.path, 'public', 'images', 'favicon.png'))
+		shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources', 'favicon.png'), os.path.join(app.path, 'public', 'images', 'favicon.png'))
+
 
 ###############################################################################
 # Init Modules Commands 
@@ -133,3 +175,5 @@ for file in os.listdir(command_dir):
 			hlist[item] = h
 COMMANDS = clist
 HELP = hlist
+MODULE = 'gwt2' 
+

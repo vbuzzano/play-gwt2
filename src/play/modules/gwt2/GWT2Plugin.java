@@ -88,14 +88,20 @@ public class GWT2Plugin extends PlayPlugin {
 				||StringUtils.isEmpty(service))
 			return null;
 		
-		String gwtpath = modulesDir();
 		
 		GWT2Module mod = new GWT2Module();
 		mod.name = module.replace(" ", "").trim();
-		mod.path = gwtpath + "/" + module;
 		
-		String sClass = gwtpath + "."  + mod.name + ".services." + 
+		String sClass;
+		if (mod.name.equals("app")) {
+			mod.path = "";
+			sClass = "services." + service.replace(" ", "").trim();
+		} else {
+			String gwtpath = modulesDir();
+			mod.path = gwtpath + "/" + module;
+			sClass = gwtpath + "."  + mod.name + ".services." + 
 							service.replace(" ", "").trim();
+		}
 		
 		mod.service = Play.classloader.getClassIgnoreCase(sClass);
         

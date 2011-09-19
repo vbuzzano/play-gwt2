@@ -36,6 +36,12 @@ def execute(args):
 	modulename = modulename.strip()
 	modulename = string.replace(modulename, ' ', '_')
 	
+	if modulename == 'app':
+		print "~"
+		print "~ Name error: you cannot name a module app. This name is used for the main Application module"
+		print "~"
+		sys.exit(1)
+		
 	# create the new module
 	if os.path.exists(os.path.join(app.path, modules_dir, modulename)):
 		print "~ Error: GWT Module " + modulename + " already exists"
@@ -43,6 +49,11 @@ def execute(args):
 		sys.exit(1)
 	
 	createModule(app, env, gwt2_module_dir, modules_dir, modulename, base_classpath)
+	
+	print "~"
+	print "~ done"
+	print "~"
+
 
 # Create Module
 def createModule(app, env, gwt2_module_dir, modules_dir, modulename, base_classpath):
@@ -98,7 +109,4 @@ def createModule(app, env, gwt2_module_dir, modules_dir, modulename, base_classp
 	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources', 'FieldVerifier.java'), tmpfile)
 	replaceAll(tmpfile, r'\[modulename\]', modulename)	
 	replaceAll(tmpfile, r'\[modpackage\]', modpackage)
-	
-	print "~"
-	print "~ GWT Module " + modulename + " has been created" 
-	print "~"
+

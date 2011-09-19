@@ -2,4 +2,5 @@
 # You can specialize this file for each language.
 # For exemple, for french create a messages.fr file
 
-#play-gwt2.name=Play GWT2
+gwt2.name=Play! GWT2 Plugin
+gwt2.powered=Powered by Play! framework and GWT2 Plugin

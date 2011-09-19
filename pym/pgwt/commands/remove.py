@@ -1,21 +1,21 @@
 ###############################################################################
-# GWT2 Clean Command - tested[2010-10-07]
+# GWT2 Remove - tested[2010-10-07]
 #
-# [gwt2:clean]
+# [gwt2:remove]
 # 
-# Clean an existing GWT Module
+# Remove a GWT Module
 #
 # @author Vincent Buzzano <vincent.buzzano@gmail.com>
 ###############################################################################
 import sys, os, string, shutil
-from gwt2 import *
+
+from pgwt import *
 
 def getCommands():
-	return ["gwt2:clean"]
+	return ["gwt2:remove"]
 
 def getHelp():
-	return "Clean a compiled GWT Module"
-
+	return "Remove a GWT Module"
 
 def execute(args):
 	application_path = args.get("app").path
@@ -24,7 +24,7 @@ def execute(args):
 	gwt_path = args.get("gwt_path")
 	
 	# List all modules
-	modulename = functions.askForModule(args, 'clean', True)
+	modulename = functions.askForModule(args, 'remove', False, True)
 	
 	# delete the  app
 	if not os.path.exists(os.path.join(application_path, modules_dir, modulename)):
@@ -33,10 +33,17 @@ def execute(args):
 		print "~"		
 		sys.exit(1)
 	
-	# clean public dir
+	# remove module dir
+	if os.path.exists(os.path.join(application_path, modules_dir, modulename)):
+		shutil.rmtree(os.path.join(application_path, modules_dir, modulename))
+	
+	# remove module public dir
 	if os.path.exists(os.path.join(application_path, public_dir, modulename)):
 		shutil.rmtree(os.path.join(application_path, public_dir, modulename))
+	if os.path.exists(os.path.join(application_path, public_dir, 'WEB-INF','deploy',modulename)):
+		shutil.rmtree(os.path.join(application_path, public_dir, 'WEB-INF','deploy',modulename))
 	
 	print "~"
-	print "~ GWT Module " + modulename + " has been cleaned."
+	print "~ done"
 	print "~"
+

@@ -8,7 +8,7 @@
 # @author Vincent Buzzano <vincent.buzzano@gmail.com>
 ###############################################################################
 import string
-from gwt2 import *
+from pgwt import *
 
 def getCommands():
 	return ["gwt2:compile"]
@@ -19,7 +19,17 @@ def getHelp():
 def execute(args):
 	
 	# List all modules
-	modulename = functions.askForModule(args, 'compile', True)
-		
+	modulename = functions.askForModule(args, 'compile', True, True)
+	
 	# Compile selected module
-	functions.compile(args, modulename)
+	print "~ ---------------------- "
+	ret = functions.compile(args, modulename)
+	print "~ ---------------------- "
+	
+	print "~"
+	if ret:
+		print "~ done"
+	else:
+		print "~ failed"
+	print "~"
+

@@ -1,8 +1,8 @@
 h1. <a>Play GWT2 Module Version 1.8</a>
 
-p.  Play GWT2 1.8 provides some classes and commands to simplify the integration of a GWT 2.2.0 and GWT 2.3.0 project/Module in a play application. 
+p.  Play GWT2 1.8 provides some classes and commands to simplify the integration of a GWT 2.x.x project/Module in a play application. 
  
-This module has been tested with play 1.2.3 and gwt 2.2.x and 2.3.0
+This module has been tested with play 1.2.3 and gwt 2.2.x and 2.3.x, but has not been tested yet with 2.4.0. If someone do it please, let me know.
 
 p. New in version 1.8
  * Rewrite play shell commands. 

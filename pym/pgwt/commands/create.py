@@ -71,7 +71,7 @@ def createModule(app, env, gwt2_module_dir, modules_dir, modulename, base_classp
 
 	# copy index.html
 	file = os.path.join(modulesdir, modulename, 'public', 'index.html')
-	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources','index.html'), file)
+	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources','modindex.html'), file)
 	replaceAll(file, r'\[modulename\]', modulename)
 	
 	# copy entry point

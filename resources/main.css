@@ -1,0 +1,39 @@
+body {
+margin: 0px;
+padding: 0px;
+background: #222!important;
+color: #eee;
+font-family: helvetica;
+}
+
+#header {
+margin: auto;
+padding: 8px;
+width: 946px;
+}
+
+#header-title {
+margin: 10px 15px 20px 0px;
+font-size: 24pt;
+color: #fffafa;
+}
+
+#pagecontainer {
+background: #eee;
+}
+
+#page {
+margin: auto;
+padding: 8px;
+width: 946px;
+color: #111;
+min-height: 200px;
+}
+
+#footer {
+margin: auto;
+padding: 8px;
+width: 946px;
+color: #fffafa;
+text-align: center;
+}

@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="app"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PLAY-1.2.1"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/GWT-2.3.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/GWT"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PLAY!"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

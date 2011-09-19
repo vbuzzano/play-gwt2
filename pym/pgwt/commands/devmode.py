@@ -78,9 +78,10 @@ def execute(args):
 	
 	# do we use automatic startup urls
 	startupUrls = []
-	if app.readConf('gwt2.devmode.url.auto') == True :
+	if app.readConf('gwt2.devmode.url.auto') == "true" :
 		for modul in modulename:
-			startupUrls.append('http://localhost:' + app.readConf('http.port') + public_path + '/'+modul+'/index.html')
+			if modul != "app" :
+				startupUrls.append('http://localhost:' + app.readConf('http.port') + public_path + '/'+modul+'/index.html')
 	else:
 		for i in range(1, 100):
 			if app.readConf('gwt2.devmode.url.%d' %(i)) :

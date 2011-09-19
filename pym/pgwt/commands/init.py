@@ -38,6 +38,12 @@ def execute(args):
 	if not os.path.exists(os.path.join(app.path, "app", "client")):
 		os.mkdir(os.path.join(app.path, "app", "client"))
 
+	if not os.path.exists(os.path.join(app.path, "app", "client", "services")):
+		os.mkdir(os.path.join(app.path, "app", "client", "services"))
+
+	if not os.path.exists(os.path.join(app.path, "app", "client", "ui")):
+		os.mkdir(os.path.join(app.path, "app", "client", "ui"))
+
 	# Create services dir
 	if not os.path.exists(os.path.join(app.path, "app", "services")):
 		os.mkdir(os.path.join(app.path, "app", "services"))
@@ -45,7 +51,7 @@ def execute(args):
 	# Create shared dir
 	if not os.path.exists(os.path.join(app.path, "app", "shared")):
 		os.mkdir(os.path.join(app.path, "app", "shared"))
-		
+			
 	# find if gwt lib is present
 	gwtuserok = 0
 	gwtdevok = 0
@@ -82,13 +88,48 @@ def execute(args):
 def initApplication(app, env, gwt2_module_dir, modules_dir):
 	modulename = "app"
 	
+	# replace favicon
+	os.remove(os.path.join(app.path, 'public', 'images', 'favicon.png'))
+	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources', 'favicon.png'), os.path.join(app.path, 'public', 'images', 'favicon.png'))
+	
+	# replace view/main.html
+	os.remove(os.path.join(app.path, 'app', 'views', 'main.html'))
+	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources', 'main.html'), os.path.join(app.path, 'app', 'views', 'main.html'))
+	
+	# replace css
+	os.remove(os.path.join(app.path, 'public', 'stylesheets', 'main.css'))
+	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources', 'main.css'), os.path.join(app.path, 'public', 'stylesheets', 'main.css'))
+
+
 	# create app xml def
 	file = os.path.join(app.path, 'app', modulename.capitalize()+'.gwt.xml')
 	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources', 'Main.gwt.xml'), file)
 	replaceAll(file, r'\[modulename\]', modulename)
 	replaceAll(file, r'\[othermodule\]', "<inherits name='play.modules.gwt2.PlayGWT2'/>")
-	replaceAll(file, r'\[entrypointclass\]', "")
-	replaceAll(file, r'\[sourcepath\]', "<source path='shared'/>\n    <source path='models'/>")
+	replaceAll(file, r'\[entrypointclass\]', "client.Application")
+	replaceAll(file, r'\[sourcepath\]', "<source path='client'/>\n    <source path='shared'/>\n    <source path='models'/>")
+	
+	# replace views/Application/index.html
+	os.remove(os.path.join(app.path, 'app', 'views', 'Application', 'index.html'))
+	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources', 'index.html'), os.path.join(app.path, 'app', 'views', 'Application', 'index.html'))
+
+	# copy entry point
+	file = os.path.join(app.path, 'app', 'client', 'Application.java')
+	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources', 'appApplication.java'), file)
+	
+	# copy service class	
+	tmpfile = os.path.join(app.path, 'app', 'client', 'services', 'GreetingService.java')
+	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources', 'appGreetingService.java'), tmpfile)
+	
+	tmpfile = os.path.join(app.path, 'app', 'client', 'services', 'GreetingServiceAsync.java')
+	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources', 'appGreetingServiceAsync.java'), tmpfile)
+	
+	tmpfile = os.path.join(app.path, 'app', 'services', 'Greeting.java')
+	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources', 'appGreeting.java'), tmpfile)
+	
+	tmpfile = os.path.join(app.path, 'app', 'shared', 'FieldVerifier.java')
+	shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources', 'appFieldVerifier.java'), tmpfile)
+
 
 # Check if the application has already been initialized. if yes, we stop the command
 def isAlreadyInit(app):

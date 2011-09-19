@@ -138,15 +138,12 @@ def after(**kargs):
 		# update gwt application xml
 		file = os.path.join(app.path, 'app', 'App.gwt.xml')
 		replaceAll(file, '    <!-- Specify the app entry point class.                         -->', '    <!-- Specify the app entry point class.                         -->\n    <entry-point class="client.Application"/>')
-		replaceAll(file, "<source path='shared'/>", "<source path='client'/>\n    <source path='hared'/>")
+		replaceAll(file, "<source path='shared'/>", "<source path='client'/>\n    <source path='shared'/>")
 		
 		# remove javascripts
 		if os.path.exists(os.path.join(app.path, 'public', 'javascripts')):
-			shutil.rmtree(os.path.join(app.path, 'public', 'javascripts'))
-		
-		# replace favicon
-		os.remove(os.path.join(app.path, 'public', 'images', 'favicon.png'))
-		shutil.copyfile(os.path.join(env["basedir"], gwt2_module_dir, 'resources', 'favicon.png'), os.path.join(app.path, 'public', 'images', 'favicon.png'))
+			shutil.rmtree(os.path.join(app.path, 'public', 'javascripts'))               
+                
 
 
 ###############################################################################

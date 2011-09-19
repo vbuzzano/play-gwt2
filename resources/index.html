@@ -1,16 +1,10 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Main</title>
-  </head>
-  <body bgcolor="white">
+#{extends 'main.html' /}
+#{set title:'My GWT Application' /}
 
-    <script type="text/javascript" language="javascript" src="[modulename].nocache.js"></script>
+#{gwt2.module 'app', history: true}
+	// use this to transmit args to your appliction (as key: value, key: value, ...)
+	'myargs': 'myvalue',
+	'myargs2': 'myvalue'
+#{/gwt2.module}
 
-    <h1>Welcome to GWT Module <b>[modulename]</b></h1>
-
-    <div id="content"/>
-
-  </body>
-</html>
+<div id="content"></div>

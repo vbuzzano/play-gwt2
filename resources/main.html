@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>#{get 'title' /}</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+        #{get 'moreStyles' /}
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+        #{get 'moreScripts' /}
+    </head>
+    <body>
+        <div id="header">
+            <h1 id="header-title">My GWT Application</h1>
+        </div>
+        <div id="pagecontainer">
+            <div id="page">
+                #{doLayout /}
+            </div>
+        </div>
+        <div id="footer">
+            &{'gwt2.powered'}
+        </div>
+    </body>
+</html>

@@ -2,7 +2,8 @@
 # GWT2 Plugin for Play! 1.2.2
 # by Vincent Buzzano <vincent.buzzano@gmail.com>
 ###############################################################################
-import getopt, sys, os, inspect
+import getopt, sys, os, inspect, urllib
+
 global gwt2_module_dir, command_dir
 gwt2_module_dir = inspect.getfile(inspect.currentframe()).replace("commands.py","")
 command_dir = os.path.join(gwt2_module_dir, "pym", "pgwt", "commands")
@@ -113,6 +114,7 @@ def after(**kargs):
 		depsfile = open(depspath,"a")
 		depsfile.write('\n    - com.google.gwt -> gwt-user 2.3.0\n')
 		depsfile.write('    - com.google.gwt -> gwt-dev 2.3.0\n')
+		depsfile.write('    - javax.validation -> validation-api 1.0.0.GA\n')
 		depsfile.close()
 		
 		# Add gwt2 configuration
@@ -143,7 +145,16 @@ def after(**kargs):
 		# remove javascripts
 		if os.path.exists(os.path.join(app.path, 'public', 'javascripts')):
 			shutil.rmtree(os.path.join(app.path, 'public', 'javascripts'))               
-                
+		
+		# Fix Play dependencies source download. Download validation-api-1.0.0.GA-source.jar
+		# remove this line once play fix source donwload in the file conf/dependencies.xml
+		print '~'
+		print '~ Play dependencies source fix for validation-api-1.0.0.GA'
+		print '~ Downloading validation-api-1.0.0.GA-sources.jar -> lib/'
+		srcjar = os.path.join(app.path, 'lib/validation-api-1.0.0.GA-sources.jar')
+		urllib.urlretrieve ("http://search.maven.org/remotecontent?filepath=javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA-sources.jar", srcjar)
+		print '~ Done!'
+		print '~'
 
 
 ###############################################################################

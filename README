@@ -39,6 +39,18 @@ or
 
 This will display GWT2 Plugin for Play! commands help.
 
+
+#################################################
+WORKAROUND FOR:
+VALIDATION COMPILATION ERROR due to missing Type and Sources
+#################################################
+
+Copy validation-api-1.0.0.GA and source to your project libs. You can find them into the GWT SDK Directory.
+
+> cp $GWT_HOME/validation-api-1.0.0.GA* lib/
+
+#################################################
+
 HISTORY
 --------------------------------------
 1.8  - Rewrite play shell commands. 

@@ -26,9 +26,12 @@ import java.util.concurrent.Future;
 abstract public class GWT2ChainRuntime extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	private Future<?> future;
-	private GWT2Chain<Object> chain;
+
+	@SuppressWarnings("rawtypes")
+	private GWT2Chain chain;
 	
-	public GWT2ChainRuntime(Future<?> future, GWT2Chain<Object> chain) {
+	@SuppressWarnings("rawtypes")
+	public GWT2ChainRuntime(Future<?> future, GWT2Chain chain) {
 		this.future = future;
 		this.chain = chain;
 	}
@@ -37,7 +40,8 @@ abstract public class GWT2ChainRuntime extends RuntimeException {
 		return future;
 	}
 	
-	public GWT2Chain<Object> getChain() {
+	@SuppressWarnings({ "rawtypes" })
+	public GWT2Chain getChain() {
 		return chain;
 	}
 }

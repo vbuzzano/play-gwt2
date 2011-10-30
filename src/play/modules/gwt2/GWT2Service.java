@@ -221,11 +221,13 @@ public class GWT2Service implements SerializationPolicyProvider {
     	return rpcRequest.getMethod();
     }
 
-	protected static Object chainASync(Future<?> future, GWT2Chain<Object> chain) {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	protected static Object chainASync(Future<?> future, GWT2Chain chain) {
     	throw new GWT2ChainAsync(future, chain);
     }
 
-	protected static Object chain(Future<?> future, GWT2Chain<Object> chain) {
+	@SuppressWarnings("rawtypes")
+	protected static Object chain(Future<?> future, GWT2Chain chain) {
     	throw new GWT2ChainSync(future, chain);
     }
 

@@ -28,7 +28,8 @@ import java.util.concurrent.Future;
 public class GWT2ChainSync extends GWT2ChainRuntime {
 	private static final long serialVersionUID = 1L;
 
-	public GWT2ChainSync(Future<?> future, GWT2Chain<Object> chain) {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public GWT2ChainSync(Future<?> future, GWT2Chain chain) {
 		super(future, chain);
 	}
 }

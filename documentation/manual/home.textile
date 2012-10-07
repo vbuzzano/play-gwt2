@@ -2,7 +2,7 @@ h1. <a>Play GWT2 Module Version 1.8</a>
 
 p.  Play GWT2 1.8 provides some classes and commands to simplify the integration of a GWT 2.x.x project/Module in a play application. 
  
-This module has been tested with play 1.2.3 and gwt 2.2.x and 2.3.x, but has not been tested yet with 2.4.0. If someone do it please, let me know.
+This module has been tested with play 1.2.3 and gwt 2.2.x and 2.3.x, but has not been tested yet with 2.4.0. If someone has tested 2.4.0, let me know.
 
 p. New in version 1.8
  * Rewrite play shell commands. 
@@ -32,7 +32,7 @@ p. 2. Go to your application
 
 bc. > cd myGwt2App
 
-p. Test you application:
+p. Test your application:
 
 bc. play run
 
@@ -75,9 +75,9 @@ p. this will
  - and copy gwt-user.jar to myApp/lib
  - Add a default App.gwt.xml in your myApp
 
-if you want to change get path for you gwt modules, edit the conf/application.conf file and add theese lines
+if you want to change the get path for your gwt modules, edit the conf/application.conf file and add theese lines
 
-then you can set you personal folder to use
+then you can set a personal folder to use
 
 if you want to manage the gwt-user.jar with play dependencies, add gwt-user to your play dependencies file.
 
@@ -107,232 +107,4 @@ bc. *		/      module:gwt2
 
 h2. <a>GWT2 configuration</a>
 
-if you want to change path for you gwt modules, edit the conf/application.conf file and add theese lines
-
-bc. # GWT2 Configuration
-# ~~~~~
-# gwt2.modulesdir=<modulesdir> 
-# it will be use to know where are gwt modules
-# default: gwt
-#
-# gwt2.publicdir=<publicdir>
-# it will be use to know where are the public directory for compiled module and for routing
-# default: gwt-public
-#
-# gwt.publicpath=/<path>
-# it will be use for routing configuration
-# default: /app
-#
-# GWT devmode startupUrls
-# #gwt2.devmode.url.auto=true
-# gwt2.devmode.url.1=/
-
-
-
-h2. <a>Create a GWT Module</a> 
- 
-create your module like this:
-
-bc. play gwt2:create
-
-p. this will ask you a gwt module name 
-
-bc. What is the gwt module name ?
-
-p. enter for eg: firstmodule
-
-p. this action create some files
-
-bc.	myApp/app/gwt/firstmodule
-myApp/app/gwt/firstmodule/Firstmodule.gwt.xml (module)
-myApp/app/gwt/firstmodule/public
-myApp/app/gwt/firstmodule/public/index.html (default page for entry point)
-myApp/app/gwt/firstmodule/client
-myApp/app/gwt/firstmodule/client/Firstmodule.java (entry point)
-myApp/app/gwt/firstmodule/client/GreetingService.java
-myApp/app/gwt/firstmodule/client/GreetingServiceAsync.java
-myApp/app/gwt/firstmodule/shared
-myApp/app/gwt/firstmodule/shared/FieldVerifier.java
-myApp/app/gwt/firstmodule/services
-myApp/app/gwt/firstmodule/services/Greeting.java
-
-p. GreetingService Interface must use annotation @RemoteServiceRelativePath("greeting")
-
-p. Service Implementation must implements GWTService, be place in the package gwt.<module>.services, and named as define in annotation @RemoteServiceRelativePath
-
-p. Or if you want to place your service or name it differently, eg: GreetingServiceImpl.java, you must use @GWT2ServicePath("/firstmodule/greet") annotation
-
-
-h2. <a>Testing you GWT Module with dev mode</a>
-
-First start you Play application.
-
-bc. play run
-
-Then start the dev mode, 
-
-bc. play gwt2:devmode
-
-p.  GWT will compile your modules at first time.
-
-p. Now you access your gwt module this url <host>/app/firstmodule/index.html 
-
-h2. <a>Compiling a module</a>
-
-To compile a module (eg: before deployment)
-
-bc. play gwt2:compile
-
-p. this will ask you a gwt module name 
-
-bc. What is the gwt module name ? 
-
-p.  Enter a name, then GWT will compile your module.
-
-
-h2. <a>Remove a GWT Module</a>
-
-p. As for creating a new GWT Module but use gwt2:remove 
-
-bc. play gwt2:remove
-
-p. this will ask you a gwt module name 
-
-bc. What is the gwt module name ?
-
-p. all directory of your module will be deleted:
-- 	myApp/app/gwt/firstmodule/**
-- 	myApp/gwt-public/firstmodule/**
-
-
-h2. <a>Async</a>
-
-p. You can use @GWT2ServiceAsync to invoke your GWT2 service normaly or as a play job
-
-h2. <a>Chain</a>
-
-p. If you don't use @GWT2ServiceAsync you can use GWT2Chain in your GWT2Service to run Promise/Future/Job normaly or async with callback
-
-p. for that you will use GWT2Service.chain(Future, GWT2Chain) for synced call (blocking thread) or GWT2Service.chainAsyn(Future, GWT2Chain) for async call (non blocking thread)
-
-p. See gwt2async sample. 
-
-h2. <a>Debugging the GWT UI</a>
-
-p. 1. The easiest way it to eclipsify, netbeansify, ... you application and then use you prefered IDE to use JPDA. By default GWT listen on port 3408.
-
-
-h2. <a>Creating a service using GWT-RPC</a>
-
-**this part is the same as the Play-GWT by Rustem Suniev**.
-
-If you follow the GWT manual, it will explain you how to expose a service with GWT-RPC using a **RemoteServiceServlet**. 
-
-Exposing a GWT service with Play is almost the same, but since you can't define servlets in a Play application, you have to use the provided support class, **play.modules.gwt.GWTService** 
-
-For example, to implement this service:
-
-bc. 
-package gwt.mymod.client;
-import com.google.gwt.user.client.rpc.RemoteService;
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-@RemoteServiceRelativePath("hello")
-public interface HelloService extends RemoteService {
-    String sayHello(String name);
-}
-
-
-simply create a class that extends the **play.modules.gwt.GWTService**, and define the service URL path with the **play.modules.gwt.GWTServicePath** annotation. Like this:
-
-bc.  
-package services;
-import play.modules.gwt2.GWT2Service;
-import play.modules.gwt2.GWT2ServicePath;
-import gwt.mymod.client.HelloService;
-@GWT2ServicePath("/main/hello")
-public class HelloServiceImpl extends GWT2Service implements HelloService {
-    public String sayHello(String name) {
-        return "Hello " + name;
-    }
-}
-
-This is the only difference from the GWT documentation.
-
-h2. <a>Using Play Model</a>
-You can use Play Model directly with your GWT Services. For that you have 2 solutions.
-
-p. 1. the first one is to create JPA Entity without extending play.db.jpa.Model
-
-bc. @Entity
-public class MyModel 
-{
-	@Required
-	@MinSize(1)
-	@MaxSize(100)
-	@Column(name="text", nullable=false, length=100)
-	public String someText;
-}
-
-You will have to use JPA.em().
-
-p. 2. the second one is to extends your model with play.db.jpa.Model and add a Custom Field Serializer side to the model class.
-
-bc. MyModel.java
-@Entity
-public class MyModel extends Model 
-{
-	@Required
-	@MinSize(1)
-	@MaxSize(100)
-	@Column(name="text", nullable=false, length=100)
-	public String someText;
-}
-
-bc. MyModel_CustomFieldSerializer.java
-public class MyModel_CustomFieldSerializer {
-	public static MyModel instantiate(SerializationStreamReader reader)
-		throws SerializationException {
-		return new MyModel();
-	}
-	public static void serialize(SerializationStreamWriter writer,
-			MyModel instance)
-		throws SerializationException {
-		writer.writeObject(instance.id);
-		writer.writeString(instance.someText);
-	}
-	public static void deserialize(SerializationStreamReader reader,
-			MyModel instance)
-		throws SerializationException {
-		instance.id = (Long) reader.readObject();
-		instance.someText = reader.readString();
-	}
-
-h2. <a>Samples</a>
-
-You will find 2 samples in the folder "samples" in the play gwt2 modules.
-
-1. simple test 
-This sample is just a basic gwt module create with:
- - gwt2:init
- - gwt2:create
- - gwt2:compile
-
-2. myModel
-This sample is an basic gwt module wich use Play Model.
-
-3. gwt2async 
-This sample show how to use async call inside a GWT2service doing long task without blocking any thread
-
-to test any sample
-a. cd> go to the sample folder
-b. run> play deps
-c. run> play gwt:compileall
-d. run> play run
-
-h2. <a>About</a>
-
-This Module is maintained by **Vincent Buzzano**
-
-website:
- - http://github.com/vbuzzano/play-gwt2
-
+if you want to change the path for you
